@@ -1,7 +1,10 @@
 { config, pkgs, lib, ... }:
 {
+  users.groups.git = {};
+
   users.users.git = {
     isSystemUser = true;
+    group = "git";
     description = "git-shell user";
     home = "/srv/git";
     createHome = true;
