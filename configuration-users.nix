@@ -1,10 +1,5 @@
 { config, pkgs, lib, ... }:
 {
-  # pull the git user in separately so that can be reused
-  imports = [
-    ./configuration-users-git.nix
-  ];
-
   security.sudo.wheelNeedsPassword = false;
 
   users.users.jess = {
