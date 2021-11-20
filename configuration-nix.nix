@@ -9,6 +9,10 @@
     "agenix=https://github.com/ryantm/agenix/archive/master.tar.gz"
   ];
 
+  nix.extraOptions = ''
+    experimental-features = nix-command flakes
+  '';
+
   # automatic garbage collection
   nix.gc = {
     automatic = true;
