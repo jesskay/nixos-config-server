@@ -6,7 +6,7 @@
     "/nix/var/nix/profiles/per-user/root/channels"
     # below this point is non-default, can be bootstrapped with -I if used in nixos-rebuild
     "nixos-config=https://github.com/jesskay/nixos-config-rpi4/archive/main.tar.gz"
-    "agenix=https://github.com/ryantm/agenix/archive/master.tar.gz"
+    "agenix=https://github.com/ryantm/agenix/archive/main.tar.gz"
   ];
 
   nix.extraOptions = ''
