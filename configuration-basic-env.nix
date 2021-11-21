@@ -23,6 +23,10 @@
     };
   };
 
+  programs.bash.interactiveShellInit = ''
+    eval "$(${pkgs.starship}/bin/starship init bash)"
+  '';
+
   environment.systemPackages = with pkgs; [
     git
   ];
