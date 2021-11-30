@@ -3,7 +3,7 @@
 
   inputs.agenix.url = "github:ryantm/agenix";
 
-  outputs = { self, nixpkgs, agenix }: {
+  outputs = { self, nixpkgs, agenix, ... }@inputs : {
 
     nixosConfigurations.rpi4 = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";

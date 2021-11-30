@@ -12,7 +12,7 @@
     nixpkgs.flake = inputs.nixpkgs;
 
     # `nixpkgs-unstable` is set to the current nixos-unstable
-    nixpkgs-unstable.to = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.to = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
 
     # `active-config` is set to the flake the current system was built from
     active-config.flake = inputs.self;
