@@ -13,6 +13,9 @@
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
 
+            # Make `inputs` into a module argument for any that want it (e.g., for registry).
+            _module.args.inputs = inputs;
+
             hardware.enableRedistributableFirmware = true;
             hardware.pulseaudio.enable = true;
 
