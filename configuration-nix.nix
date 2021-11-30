@@ -4,11 +4,11 @@
   nix.nixPath = [
     "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
     "/nix/var/nix/profiles/per-user/root/channels"
-    # below this point is non-default, can be bootstrapped with -I if used in nixos-rebuild
-    "nixos-config=https://github.com/jesskay/nixos-config-rpi4/archive/main.tar.gz"
-    "agenix=https://github.com/ryantm/agenix/archive/main.tar.gz"
   ];
 
+  # explicitly opt into nix 2.4, since nixos 21.11
+  # will stick with 2.3.x for now
+  nix.package = pkgs.nix_2_4;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
