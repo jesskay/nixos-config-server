@@ -25,8 +25,13 @@
   nix.package = pkgs.nix_2_4;
   nix.extraOptions = 
   let
-    dummyRegistry = pkgs.writeText
-      "dummy-registry.json" "{}";
+    dummyRegistry = pkgs.writeText "dummy-registry.json"
+    ''
+      {
+        "version": 2,
+        "flakes": []
+      }
+    '';
   in ''
     experimental-features = nix-command flakes
     flake-registry = ${dummyRegistry}
