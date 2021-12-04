@@ -14,6 +14,9 @@
     # `nixpkgs-unstable` is set to the current nixos-unstable
     nixpkgs-unstable.to = { type = "github"; owner = "NixOS"; repo = "nixpkgs"; ref = "nixos-unstable"; };
 
+    # `templates` is set to the same as the global registry, so `nix flake init` can work
+    templates.to = { type = "github"; owner = "NixOS"; repo = "templates"; };
+
     # `active-config` is set to the flake the current system was built from
     active-config.flake = inputs.self;
   };
