@@ -12,6 +12,9 @@
       system = "aarch64-linux";
       modules =
         [ ({ pkgs, ... }: {
+            # disable nixos-21.11 tailscale module
+            disabledModules = [ "services/networking/tailscale.nix" ];
+
             # Let 'nixos-version --json' know about the Git revision
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
@@ -67,6 +70,8 @@
           ./configuration-nix.nix
           ./configuration-users.nix
           ./configuration-web.nix
+
+          "${nixpkgs-unstable}/nixos/modules/services/networking/tailscale.nix"
 
           agenix.nixosModules.age
         ];
