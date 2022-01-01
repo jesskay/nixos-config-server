@@ -1,10 +1,12 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
 
+  inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
   inputs.agenix.url = "github:ryantm/agenix";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, agenix, ... }@inputs : {
+  outputs = { self, nixpkgs, nixpkgs-unstable, agenix, ... }@inputs : {
 
     nixosConfigurations.rpi4 = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
@@ -16,6 +18,9 @@
 
             # Make `inputs` into a module argument for any that want it (e.g., for registry).
             _module.args.inputs = inputs;
+
+            # Make the platform-specific nixpkgs-unstable into a module argument, for portability of modules.
+            _module.args.pkgs-unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
 
             hardware.enableRedistributableFirmware = true;
             hardware.pulseaudio.enable = true;
