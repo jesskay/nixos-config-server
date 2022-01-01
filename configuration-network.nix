@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 {
   networking.hostName = "rpi4";
   networking.wireless.enable = true;
@@ -29,7 +29,8 @@
 
   ## tailscale
   services.tailscale.enable = true;
-  environment.systemPackages = [ pkgs.tailscale ];
+  services.tailscale.package = pkgs-unstable.tailscale;  # 21.11 has quite an old version
+  environment.systemPackages = [ config.services.tailscale.package ];
   networking.firewall = {
     trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
