@@ -55,7 +55,6 @@
       };
       "reader.psquid.net" = {
         vhostType = "oci-container";
-        aliases = [ "sapphic.space" ];
         port = 2080;
         container = let
           frssYoutube = builtins.fetchTarball {
