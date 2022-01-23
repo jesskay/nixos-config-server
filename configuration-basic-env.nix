@@ -26,7 +26,11 @@
   programs.starship = {
     enable = true;
     settings = {
-      shlvl.disabled = false;
+      shlvl = {
+        disabled = false;
+        threshold = 1;
+        symbol = "🐚";
+      };
     };
   };
 
