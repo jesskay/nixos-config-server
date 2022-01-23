@@ -41,6 +41,7 @@
       };
       cmd_duration.disabled = true;
       directory.format = " [$path]($style)[$read_only]($read_only_style) ";
+      git_branch.format = " [$symbol$branch](%style) ";
       character.error_symbol = "💥";
     };
   };
