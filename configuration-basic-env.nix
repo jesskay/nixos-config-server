@@ -40,8 +40,12 @@
         threshold = 1;
       };
       cmd_duration.disabled = true;
-      directory.format = " [$path]($style)[$read_only]($read_only_style) ";
-      git_branch.format = " [$symbol$branch](%style) ";
+      directory = {
+        format = " [$path]($style)[$read_only]($read_only_style) ";
+        truncate_to_repo = false;
+        truncation_symbol = "…/";
+      };
+      git_branch.format = " [$symbol$branch]($style) ";
       character.error_symbol = "💥";
     };
   };
