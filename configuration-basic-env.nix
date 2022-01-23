@@ -26,11 +26,22 @@
   programs.starship = {
     enable = true;
     settings = {
+      username = {
+        format = "[$user]($style)";
+        show_always = true;
+      };
+      hostname = {
+        format = "@[$hostname]($style) ";
+        ssh_only = true;
+      };
       shlvl = {
         disabled = false;
+        symbol = " 🐚";
         threshold = 1;
-        symbol = "🐚";
       };
+      cmd_duration.disabled = true;
+      directory.format = " [$path]($style)[$read_only]($read_only_style) ";
+      character.error_symbol = "💥";
     };
   };
 
