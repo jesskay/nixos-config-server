@@ -23,9 +23,12 @@
     };
   };
 
-  programs.bash.interactiveShellInit = ''
-    eval "$(${pkgs.starship}/bin/starship init bash)"
-  '';
+  programs.starship = {
+    enable = true;
+    settings = {
+      shlvl.disabled = false;
+    };
+  };
 
   environment.systemPackages = with pkgs; [
     git
