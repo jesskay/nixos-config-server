@@ -12,9 +12,6 @@
       system = "aarch64-linux";
       modules =
         [ ({ pkgs, ... }: {
-            # disable nixos-21.11 tailscale module
-            disabledModules = [ "services/networking/tailscale.nix" ];
-
             # Let 'nixos-version --json' know about the Git revision
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
@@ -64,6 +61,7 @@
             ];
           })
           
+          # local modules
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
           ./configuration-network.nix
@@ -71,8 +69,16 @@
           ./configuration-users.nix
           ./configuration-web.nix
 
-          "${nixpkgs-unstable}/nixos/modules/services/networking/tailscale.nix"
+          # upstream modules from a newer nixos (current module must be disabled if present in both versions)
+          "${nixpkgs-unstable}/nixos/modules/services/networking/tailscale.nix"  # replacement
+          "${nixpkgs-unstable}/nixos/modules/programs/starship.nix"              # addition
 
+          # inline module to disable nixos-21.11 modules where required
+          (_: { disabledModules = [
+            "services/networking/tailscale.nix"
+          ]; })
+
+          # external modules
           agenix.nixosModules.age
         ];
     };
