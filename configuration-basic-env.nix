@@ -51,11 +51,12 @@
   };
 
   environment.shellAliases = {
-    cat = "${pkgs.bat}/bin/bat";
+    cat = "bat";
   };
 
   environment.systemPackages = with pkgs; [
     git
     ripgrep
+    bat
   ];
 }
