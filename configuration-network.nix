@@ -34,7 +34,7 @@
   services.tailscale.package = pkgs-unstable.tailscale;  # 21.11 has quite an old version
   environment.systemPackages = [ config.services.tailscale.package ];
   networking.firewall = {
-    trustedInterfaces = [ "tailscale0" ];
+    trustedInterfaces = [ "tailscale0" "wlan0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
   };
   # to allow this machine to work as a subnet router
