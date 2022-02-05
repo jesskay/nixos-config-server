@@ -76,7 +76,7 @@
           # (could still fail if the tag is ever deleted)
           # this prevents getting updates automatically, but so would caching otherwise,
           # and following the release feed to manually bump the version here is no big deal
-          image = "freshrss/freshrss:1.19.1-arm";
+          image = "freshrss/freshrss:1.19.2-arm";
           volumes = [
             "freshrss-data:/var/www/FreshRSS/data"
             "${freshrssExtensions}:/var/www/FreshRSS/extensions"
