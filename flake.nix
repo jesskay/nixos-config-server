@@ -55,9 +55,6 @@
 
             swapDevices = [ { device = "/swap"; } ];
 
-            # support x86_64 user-mode emulation (for nix cross builds)
-            boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-
             environment.systemPackages = with pkgs; [
               libraspberrypi
               agenix.packages.aarch64-linux.agenix
