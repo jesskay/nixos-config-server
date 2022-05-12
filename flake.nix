@@ -24,7 +24,11 @@
 
             hardware.enableRedistributableFirmware = true;
             hardware.pulseaudio.enable = true;
-            hardware.bluetooth.enable = true;
+            hardware.bluetooth = {
+              enable = true;
+              package = nixpkgs.legacyPackages.aarch64-linux.bluez;
+              powerOnBoot = false;
+            };
 
             boot.loader.grub.enable = false;
             boot.loader.generic-extlinux-compatible.enable = true;
@@ -40,11 +44,9 @@
             boot.kernelPackages = pkgs.linuxPackages_rpi4;
             boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
             boot.tmpOnTmpfs = true;
-            boot.kernelParams = [
-              "8250.nr_uarts=1"
-              "console=ttyAMA0,115200"
-              "console=tty1"
-              "cma=128M"
+            boot.kernelParams = nixpkgs.lib.mkForce [
+              "console=ttyS0,115200n8"
+              "console=tty0"
             ];
 
             fileSystems = {
