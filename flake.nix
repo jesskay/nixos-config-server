@@ -24,6 +24,7 @@
 
             hardware.enableRedistributableFirmware = true;
             hardware.pulseaudio.enable = true;
+            hardware.bluetooth.enable = true;
 
             boot.loader.grub.enable = false;
             boot.loader.generic-extlinux-compatible.enable = true;
