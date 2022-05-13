@@ -29,6 +29,10 @@
               package = nixpkgs.legacyPackages.aarch64-linux.bluez;
               powerOnBoot = false;
             };
+            hardware.opengl = {
+              enable = true;
+              driSupport = true;
+            };
 
             boot.loader.grub.enable = false;
             boot.loader.generic-extlinux-compatible.enable = true;
