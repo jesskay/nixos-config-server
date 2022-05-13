@@ -67,6 +67,7 @@
           # local modules
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
+          ./configuration-cage.nix
           ./configuration-network.nix
           ./configuration-nix.nix
           ./configuration-users.nix
