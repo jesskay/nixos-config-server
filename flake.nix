@@ -26,12 +26,13 @@
             hardware.pulseaudio.enable = true;
             hardware.bluetooth = {
               enable = true;
-              package = nixpkgs.legacyPackages.aarch64-linux.bluez;
+              package = pkgs.bluez;
               powerOnBoot = false;
             };
             hardware.opengl = {
               enable = true;
               driSupport = true;
+              extraPackages = [ pkgs.mesa.drivers ];
             };
 
             boot.loader.grub.enable = false;
