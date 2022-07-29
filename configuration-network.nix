@@ -40,4 +40,6 @@
   # to allow this machine to work as a subnet router
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;
+  # relax reverse path checks to not break exit node
+  networking.firewall.checkReversePath = "loose";
 }
