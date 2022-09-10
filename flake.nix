@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
 
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -15,6 +15,9 @@
             # Let 'nixos-version --json' know about the Git revision
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+
+            # This is a config that assumes 22.05's config defaults
+            system.stateVersion = "22.05";
 
             # Make `inputs` into a module argument for any that want it (e.g., for registry).
             _module.args.inputs = inputs;
@@ -78,14 +81,12 @@
           ./configuration-users.nix
           ./configuration-web.nix
 
-          # upstream modules from a newer nixos (current module must be disabled if present in both versions)
-          "${nixpkgs-unstable}/nixos/modules/services/networking/tailscale.nix"  # replacement
-          "${nixpkgs-unstable}/nixos/modules/programs/starship.nix"              # addition
+          # upstream modules from a newer nixos (current module must be disabled below if present in both versions)
+          # : modules paths as strings: "${nixpkgs-unstable}/nixos/modules/path/to/module.nix"
 
-          # inline module to disable nixos-21.11 modules where required
-          (_: { disabledModules = [
-            "services/networking/tailscale.nix"
-          ]; })
+          # inline module to disable nixos-stable modules where required
+          # : list of paths relative to $REPO/nixos/modules/
+          (_: { disabledModules = [ ]; })
 
           # external modules
           agenix.nixosModules.age
