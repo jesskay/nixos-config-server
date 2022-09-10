@@ -29,7 +29,10 @@
             _module.args.pkgs-unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
 
             hardware.enableRedistributableFirmware = true;
-            hardware.pulseaudio.enable = true;
+            hardware.pulseaudio = {
+              enable = true;
+              package = pkgs.pulseaudioFull;
+            };
             hardware.bluetooth = {
               enable = true;
               package = pkgs.bluez;
