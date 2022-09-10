@@ -4,10 +4,8 @@
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
-  security.acme = {
-    email = "letsencrypt@psquid.net";
-    acceptTerms = true;
-  };
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "letsencrypt@psquid.net";
 
   services.nginx = {
     enable = true;
