@@ -53,7 +53,8 @@
               '';
             };
 
-            boot.kernelPackages = pkgs.linuxPackages_rpi4;
+            boot.kernelPackages = pkgs.linuxPackages_latest;
+            hardware.deviceTree.filter = "bcm2711-rpi-4-b.dtb";
             boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
             boot.tmpOnTmpfs = true;
             boot.kernelParams = nixpkgs.lib.mkForce [
