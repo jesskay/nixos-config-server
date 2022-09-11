@@ -60,6 +60,7 @@
               "console=ttyS0,115200n8"
               "console=tty0"
             ];
+            systemd.services."getty@".enable = false;
 
             fileSystems = {
               "/" = {
