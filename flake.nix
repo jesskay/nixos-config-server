@@ -29,39 +29,16 @@
             _module.args.pkgs-unstable = nixpkgs-unstable.legacyPackages.aarch64-linux;
 
             hardware.enableRedistributableFirmware = true;
-            hardware.pulseaudio = {
-              enable = true;
-              package = pkgs.pulseaudioFull;
-            };
-            hardware.bluetooth = {
-              enable = true;
-              package = pkgs.bluez;
-              powerOnBoot = false;
-            };
-            hardware.opengl = {
-              enable = true;
-              driSupport = true;
-              extraPackages = [ pkgs.mesa.drivers ];
-            };
 
             boot.loader.grub.enable = false;
             boot.loader.raspberryPi = {
               enable = true;
               version = 4;
-              firmwareConfig = ''
-                dtparam=audio=on
-              '';
             };
 
-            boot.kernelPackages = pkgs.linuxPackages_latest;
-            hardware.deviceTree.filter = "bcm2711-rpi-4-b.dtb";
+            boot.kernelPackages = pkgs.linuxPackages_rpi4;
             boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
             boot.tmpOnTmpfs = true;
-            boot.kernelParams = nixpkgs.lib.mkForce [
-              "console=ttyS0,115200n8"
-              "console=tty0"
-            ];
-            systemd.services."getty@".enable = false;
 
             fileSystems = {
               "/" = {
