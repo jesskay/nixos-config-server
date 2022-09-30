@@ -31,11 +31,7 @@
             hardware.enableRedistributableFirmware = true;
 
             boot.loader.grub.enable = false;
-            boot.loader.raspberryPi = {
-              enable = true;
-              version = 4;
-            };
-
+            boot.loader.generic-extlinux-compatible.enable = true;
             boot.kernelPackages = pkgs.linuxPackages_rpi4;
             boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
             boot.tmpOnTmpfs = true;
