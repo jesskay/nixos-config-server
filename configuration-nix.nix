@@ -6,6 +6,12 @@
     "/nix/var/nix/profiles/per-user/root/channels"
   ];
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      nginxStable = prev.nginxStable.override { openssl = prev.openssl; };
+    })
+  ];
+
   # set up various useful registry entries
   nix.registry = {
     # `nixpkgs` is set to the same nixpkgs flake used to build this configuration
