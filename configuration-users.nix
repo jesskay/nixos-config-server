@@ -14,6 +14,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKbKTZqadaRuZih1HELyaVQXSxI0p6jj90f+Iqjhhf6M ed25519-key-20220729"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoZB9gm4v2V+ucQdcB5bET43xvWRuSbqSAyxeBmbzoh ipadmini"
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIKVwjO9bl44mDJU1BU2pjHzG7sBgd1/SASs4twNPBtnhAAAABHNzaDo= jess@paimon"
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNlbD3M/P430r5JgrbriC6H2dKUSuIflEouucsNwNR0cWQVYorpyn/hR6APsav6q9HaiHQPramKwCP7e2/3N2us= ShellFish@iPhone-30102022"
     ];
   };
 }
