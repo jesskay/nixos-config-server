@@ -18,7 +18,7 @@
   in {
     enable = true;
     package = pkgs.freshrss.overrideAttrs (super: {
-      fixupPhase = ''
+      installPhase = super.installPhase + ''
         mkdir -p $out/extensions
         ln -s ${frssYoutube}/xExtension-YouTube $out/extensions/xExtension-YouTube
         ln -s ${frssLangfeld}/xExtension-FixedNavMenu $out/extensions/xExtension-FixedNavMenu
