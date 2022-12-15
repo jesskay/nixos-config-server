@@ -25,6 +25,12 @@
         index = "nonexistent.html";
       };
     };
+    
+    # enable acme here for the vhost which the freshrss service will create
+    virtualHosts."reader.psquid.net" = {
+      addSSL = true;
+      enableACME = true;
+    };
 
     # terse SSL+ACME-by-default sites, as defined in mod-simple-nginx
     simpleVhosts = {
@@ -51,40 +57,16 @@
         webroot = "/var/www/www.psquid.net/html";
         aliases = [ "www.psquid.net" ];
       };
-      "reader.psquid.net" = {
-        vhostType = "oci-container";
-        port = 2080;
-        container = let
-          frssYoutube = builtins.fetchTarball {
-            url = "https://github.com/kevinpapst/freshrss-youtube/archive/refs/tags/0.10.2.tar.gz";
-            sha256 = "1b18d0mvzcqxmvgrj9x0y3nr3dgx9zypzpm4xx1kql7cmvgkjz1k";
-          };
-          frssLangfeld = builtins.fetchTarball {
-            url = "https://github.com/langfeld/FreshRSS-extensions/archive/refs/heads/master.tar.gz";
-            sha256 = "1mbxmbb8bszgm8hxxn3vm5k01rg61nldi1i81pq09pv2zpvnz5pi";
-          };
-          freshrssExtensions = pkgs.runCommandLocal "freshrss-extensions" { inherit frssYoutube frssLangfeld; } ''
-            mkdir -p $out
-            cp -a $frssYoutube/xExtension-YouTube $out/xExtension-YouTube
-            cp -a $frssLangfeld/xExtension-FixedNavMenu $out/xExtension-FixedNavMenu
-            cp -a $frssLangfeld/xExtension-TouchControl $out/xExtension-TouchControl
-          '';
-        in {
-          # pull a specific versioned tag to make this config more reproducible
-          # (could still fail if the tag is ever deleted)
-          # this prevents getting updates automatically, but so would caching otherwise,
-          # and following the release feed to manually bump the version here is no big deal
-          image = "freshrss/freshrss:1.20.0-arm";
-          volumes = [
-            "freshrss-data:/var/www/FreshRSS/data"
-            "${freshrssExtensions}:/var/www/FreshRSS/extensions"
-          ];
-          environment = {
-            "CRON_MIN" = "4,34";
-            "TZ" = "Europe/London";
-          };
-        };
-      };
     };
+  };
+
+  services.freshrss = {
+    enable = true;
+    database.type = "sqlite";
+    virtualHost = "reader.psquid.net";
+    baseUrl = "https://reader.psquid.net";
+    dataDir = "/var/lib/freshrss";
+    defaultUser = "jess";
+    passwordFile = config.age.secrets.freshrss.path;
   };
 }

@@ -8,4 +8,5 @@ let
 in
 {
   "wireless.age".publicKeys = users ++ systems;
+  "freshrss.age".publicKeys = users ++ systems;
 }
