@@ -26,12 +26,6 @@
       };
     };
     
-    # enable acme here for the vhost which the freshrss service will create
-    virtualHosts."reader.psquid.net" = {
-      addSSL = true;
-      enableACME = true;
-    };
-
     # terse SSL+ACME-by-default sites, as defined in mod-simple-nginx
     simpleVhosts = {
       "dl.psquid.net" = {
@@ -58,15 +52,5 @@
         aliases = [ "www.psquid.net" ];
       };
     };
-  };
-
-  services.freshrss = {
-    enable = true;
-    database.type = "sqlite";
-    virtualHost = "reader.psquid.net";
-    baseUrl = "https://reader.psquid.net";
-    dataDir = "/var/lib/freshrss";
-    defaultUser = "jess";
-    passwordFile = config.age.secrets.freshrss.path;
   };
 }
