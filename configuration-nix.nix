@@ -21,11 +21,7 @@
     active-config.flake = inputs.self;
   };
 
-  # explicitly opt into nix 2.4, since nixos 21.11
-  # will stick with 2.3.x for now
-  # additionally, point global repository to a
-  # dummy file
-  nix.package = pkgs.nix_2_4;
+  # point global repository to a dummy file
   nix.extraOptions = 
   let
     dummyRegistry = pkgs.writeText "dummy-registry.json"

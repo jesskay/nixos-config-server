@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11";
 
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -17,7 +17,7 @@
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
 
             # This is a config that assumes 22.05's config defaults
-            system.stateVersion = "22.05";
+            system.stateVersion = "22.11";
 
             # Revert oci-containers to 21.11's default (docker) - possibly migrate to podman later?
             virtualisation.oci-containers.backend = "docker";
