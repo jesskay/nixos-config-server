@@ -51,6 +51,7 @@
           # local modules
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
+          ./configuration-freshrss.nix
           ./configuration-network.nix
           ./configuration-nix.nix
           ./configuration-users.nix
