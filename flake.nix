@@ -19,9 +19,6 @@
             # This is a config that assumes 22.05's config defaults
             system.stateVersion = "22.11";
 
-            # Revert oci-containers to 21.11's default (docker) - possibly migrate to podman later?
-            virtualisation.oci-containers.backend = "docker";
-
             # Make `inputs` into a module argument for any that want it (e.g., for registry).
             _module.args.inputs = inputs;
 
