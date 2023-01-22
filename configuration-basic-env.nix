@@ -46,7 +46,6 @@
         truncation_symbol = "…/";
       };
       git_branch.format = " [$symbol$branch]($style) ";
-      character.error_symbol = "💥";
     };
   };
 
