@@ -1,6 +1,7 @@
 { config, pkgs, pkgs-unstable, lib, ... }:
 {
   networking.hostName = "phoenix";
+  networking.useDHCP = true;
 
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
@@ -20,7 +21,7 @@
   services.tailscale.package = pkgs-unstable.tailscale;  # stable tends to be quite behind
   environment.systemPackages = [ config.services.tailscale.package ];
   networking.firewall = {
-    trustedInterfaces = [ "tailscale0" ];  # TODO: external network interface once known
+    trustedInterfaces = [ "tailscale0" "ens3" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
   };
   # to allow this machine to work as a subnet router

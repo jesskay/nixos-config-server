@@ -86,7 +86,13 @@
             # Make the platform-specific nixpkgs-unstable into a module argument, for portability of modules.
             _module.args.pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
 
+            # General hardware-specific stuff
             hardware.enableRedistributableFirmware = true;
+            hardware.cpu.intel.updateMicrocode = true;
+            boot.initrd.availableKernelModules = [ "ata_piix" "virtio_pci" "virtio_scsi" "xhci_pci" "sd_mod" "sr_mod" ];
+            boot.initrd.kernelModules = [ ];
+            boot.kernelModules = [ ];
+            boot.extraModulePackages = [ ];
 
             # Typical EFI bootloader.
             boot.loader.systemd-boot.enable = true;
