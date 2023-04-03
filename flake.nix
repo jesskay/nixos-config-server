@@ -16,7 +16,7 @@
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
 
-            # This is a config that assumes 22.05's config defaults
+            # This is a config that assumes 22.11's config defaults
             system.stateVersion = "22.11";
 
             # Make `inputs` into a module argument for any that want it (e.g., for registry).
@@ -52,7 +52,69 @@
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
           ./configuration-freshrss.nix
-          ./configuration-network.nix
+          ./configuration-network-rpi4.nix
+          ./configuration-nix.nix
+          ./configuration-users.nix
+          ./configuration-web.nix
+
+          # upstream modules from a newer nixos (current module must be disabled below if present in both versions)
+          # : modules paths as strings: "${nixpkgs-unstable}/nixos/modules/path/to/module.nix"
+
+          # inline module to disable nixos-stable modules where required
+          # : list of paths relative to $REPO/nixos/modules/
+          (_: { disabledModules = [ ]; })
+
+          # external modules
+          agenix.nixosModules.age
+        ];
+    };
+
+    nixosConfigurations.phoenix = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules =
+        [ ({ pkgs, ... }: {
+            # Let 'nixos-version --json' know about the Git revision
+            # of this flake.
+            system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
+
+            # This is a config that assumes 22.11's config defaults
+            system.stateVersion = "22.11";
+
+            # Make `inputs` into a module argument for any that want it (e.g., for registry).
+            _module.args.inputs = inputs;
+
+            # Make the platform-specific nixpkgs-unstable into a module argument, for portability of modules.
+            _module.args.pkgs-unstable = nixpkgs-unstable.legacyPackages.x86_64-linux;
+
+            hardware.enableRedistributableFirmware = true;
+
+            # Typical EFI bootloader.
+            boot.loader.systemd-boot.enable = true;
+            boot.loader.efi.canTouchEfiVariables = true;
+            boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+            # Use tmpfs for tmp
+            boot.tmpOnTmpfs = true;
+
+            fileSystems = {
+              "/" = {
+                device = "/dev/disk/by-label/NIXOS_SD";
+                fsType = "ext4";
+              };
+            };
+
+            swapDevices = [ { device = "/swap"; } ];
+
+            environment.systemPackages = with pkgs; [
+              agenix.packages.x86_64-linux.agenix
+            ];
+          })
+          
+          # local modules
+          ./configuration-agenix.nix
+          ./configuration-basic-env.nix
+          ./configuration-freshrss.nix
+          ./configuration-network-phoenix.nix
           ./configuration-nix.nix
           ./configuration-users.nix
           ./configuration-web.nix
