@@ -111,7 +111,7 @@
                 fsType = "btrfs";
               };
 
-              "/boot/efi" = {
+              "/boot" = {
                 device = "/dev/disk/by-label/EFI";
                 fsType = "vfat";
               };
