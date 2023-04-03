@@ -98,12 +98,17 @@
 
             fileSystems = {
               "/" = {
-                device = "/dev/disk/by-label/NIXOS_SD";
-                fsType = "ext4";
+                device = "/dev/disk/by-label/NIXOS_ROOT";
+                fsType = "btrfs";
+              };
+
+              "/boot/efi" = {
+                device = "/dev/disk/by-label/EFI";
+                fsType = "vfat";
               };
             };
 
-            swapDevices = [ { device = "/swap"; } ];
+            swapDevices = [ { device = "/dev/disk/by-label/SWAP"; } ];
 
             environment.systemPackages = with pkgs; [
               agenix.packages.x86_64-linux.agenix
