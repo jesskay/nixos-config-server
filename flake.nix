@@ -94,10 +94,13 @@
             boot.kernelModules = [ ];
             boot.extraModulePackages = [ ];
 
-            # Typical EFI bootloader.
-            boot.loader.systemd-boot.enable = true;
-            boot.loader.efi.canTouchEfiVariables = true;
-            boot.loader.efi.efiSysMountPoint = "/boot/efi";
+            # Install GRUB in hybrid BIOS/UEFI mode
+            # - Hetzner seems to only use BIOS currently, so this is futureproofing
+            boot.loader.grub.devices = [ "/dev/sda" ];
+            boot.loader.grub.enable = true;
+            boot.loader.grub.version = 2;
+            boot.loader.grub.efiSupport = true;
+            boot.loader.grub.efiInstallAsRemovable = true;
 
             # Use tmpfs for tmp
             boot.tmpOnTmpfs = true;
