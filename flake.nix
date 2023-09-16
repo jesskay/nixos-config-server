@@ -52,7 +52,6 @@
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
           ./configuration-freshrss.nix
-          ./configuration-komga.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
           ./configuration-users.nix
@@ -129,7 +128,6 @@
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
           ./configuration-freshrss.nix
-          ./configuration-komga.nix
           ./configuration-network-phoenix.nix
           ./configuration-nix.nix
           ./configuration-users.nix
