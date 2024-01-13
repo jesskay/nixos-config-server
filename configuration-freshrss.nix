@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 {
   # enable acme here for the vhost which the freshrss service will create
   services.nginx.virtualHosts."reader.psquid.net" = {
@@ -17,7 +17,7 @@
     };
   in {
     enable = true;
-    package = pkgs.freshrss.overrideAttrs (super: {
+    package = pkgs-unstable.freshrss.overrideAttrs (super: {
       installPhase = super.installPhase + ''
         mkdir -p $out/extensions
         ln -s ${frssLangfeld}/xExtension-FixedNavMenu $out/extensions/xExtension-FixedNavMenu
