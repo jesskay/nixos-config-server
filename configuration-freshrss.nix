@@ -12,8 +12,8 @@
       sha256 = "1mbxmbb8bszgm8hxxn3vm5k01rg61nldi1i81pq09pv2zpvnz5pi";
     };
    frssCntools = builtins.fetchTarball {
-      url = "https://github.com/cn-tools/cntools_FreshRssExtensions/archive/911585c8e0607308dc7d76041fa5a256fffcfc57.tar.gz";
-      sha256 = "1n6y4plndmkz07m27hanhiir20g57xlxpm80y1raxdw2xiyksilh";
+      url = "https://github.com/cn-tools/cntools_FreshRssExtensions/archive/bfe3d84af4bddd699b8c29edf21760303e7aae7b.tar.gz";
+      sha256 = "1sxisrn0rfdmp0v606nc9j9545zl3bjkazj0841z5rsk5rpp6x52";
     };
   in {
     enable = true;
