@@ -57,5 +57,6 @@
     git
     ripgrep
     bat
+    kitty.terminfo  # we don't want the whole terminal but we do want console applications to work in it
   ];
 }
