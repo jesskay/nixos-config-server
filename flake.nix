@@ -31,7 +31,7 @@
             boot.loader.generic-extlinux-compatible.enable = true;
             boot.kernelPackages = pkgs.linuxPackages_rpi4;
             boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
-            boot.tmpOnTmpfs = true;
+            boot.tmp.useTmpfs = true;
 
             fileSystems = {
               "/" = {
@@ -98,12 +98,11 @@
             # - Hetzner seems to only use BIOS currently, so this is futureproofing
             boot.loader.grub.devices = [ "/dev/sda" ];
             boot.loader.grub.enable = true;
-            boot.loader.grub.version = 2;
             boot.loader.grub.efiSupport = true;
             boot.loader.grub.efiInstallAsRemovable = true;
 
             # Use tmpfs for tmp
-            boot.tmpOnTmpfs = true;
+            boot.tmp.useTmpfs = true;
 
             fileSystems = {
               "/" = {
