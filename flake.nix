@@ -6,7 +6,9 @@
   inputs.agenix.url = "github:ryantm/agenix";
   inputs.agenix.inputs.nixpkgs.follows = "nixpkgs";
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, agenix, ... }@inputs : {
+  inputs.nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+  outputs = { self, nixpkgs, nixpkgs-unstable, agenix, nixos-hardware, ... }@inputs : {
 
     nixosConfigurations.rpi4 = nixpkgs.lib.nixosSystem {
       system = "aarch64-linux";
@@ -16,8 +18,8 @@
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
 
-            # This is a config that assumes 22.11's config defaults
-            system.stateVersion = "22.11";
+            # This is a config that assumes 23.11's config defaults
+            system.stateVersion = "23.11";
 
             # Make `inputs` into a module argument for any that want it (e.g., for registry).
             _module.args.inputs = inputs;
@@ -32,6 +34,17 @@
             boot.kernelPackages = pkgs.linuxPackages_rpi4;
             boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
             boot.tmp.useTmpfs = true;
+	    boot.kernelParams = [
+	      "nohibernate"
+	    ];
+
+	    hardware = {
+	      raspberry-pi."4".apply-overlays-dtmerge.enable = true;
+	      deviceTree = {
+	        enable = true;
+		filter = "*rpi-4-*.dtb";
+	      };
+	    };
 
             fileSystems = {
               "/" = {
@@ -40,10 +53,13 @@
               };
             };
 
+	    console.enable = false;
+
             swapDevices = [ { device = "/swap"; } ];
 
             environment.systemPackages = with pkgs; [
               libraspberrypi
+	      raspberrypi-eeprom
               agenix.packages.aarch64-linux.agenix
             ];
           })
@@ -64,6 +80,7 @@
 
           # external modules
           agenix.nixosModules.age
+	  nixos-hardware.nixosModules.raspberry-pi-4
         ];
     };
 
