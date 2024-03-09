@@ -33,7 +33,7 @@
             boot.loader.generic-extlinux-compatible.enable = true;
             boot.kernelPackages = pkgs.linuxPackages_rpi4;
             boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
-            boot.tmp.useTmpfs = true;
+            boot.tmp.cleanOnBoot = true;
 	    boot.kernelParams = [
 	      "nohibernate"
 	    ];
