@@ -118,8 +118,8 @@
             boot.loader.grub.efiSupport = true;
             boot.loader.grub.efiInstallAsRemovable = true;
 
-            # Use tmpfs for tmp
-            boot.tmp.useTmpfs = true;
+            # use a plain directory for /tmp
+            boot.tmp.cleanOnBoot = true;
 
             fileSystems = {
               "/" = {
