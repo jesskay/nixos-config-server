@@ -42,4 +42,12 @@
     options = "--delete-older-than 7d";
     dates = "weekly";
   };
+
+  # trust root (and @wheel, as users in @wheel could become root
+  # to bypass trust anyway so excluding them is reduced convenience
+  # for no benefit)
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
 }
