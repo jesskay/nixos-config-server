@@ -7,6 +7,7 @@
 
   services.openssh = {
     enable = true;
+    openFirewall = false;
     settings = {
       PermitRootLogin = "no";
       PasswordAuthentication = false;
@@ -23,7 +24,7 @@
   services.tailscale.package = pkgs-unstable.tailscale;  # stable tends to be quite behind
   environment.systemPackages = [ config.services.tailscale.package ];
   networking.firewall = {
-    trustedInterfaces = [ "tailscale0" "ens3" ];
+    trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
   };
   # to allow this machine to work as a subnet router
