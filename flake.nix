@@ -42,7 +42,7 @@
 	      raspberry-pi."4".apply-overlays-dtmerge.enable = true;
 	      deviceTree = {
 	        enable = true;
-		filter = "*rpi-4-*.dtb";
+		filter = "bcm2711-rpi-4*.dtb";
 	      };
 	    };
 
@@ -69,6 +69,7 @@
           # local modules
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
+          ./configuration-bluetooth-rpi4.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
           ./configuration-users.nix
