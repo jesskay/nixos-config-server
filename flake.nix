@@ -56,8 +56,6 @@
               };
             };
 
-	    console.enable = false;
-
             swapDevices = [ { device = "/swap"; } ];
 
             environment.systemPackages = with pkgs; [
