@@ -47,6 +47,10 @@
 	      };
 	    };
 
+            sound.enable = true;
+
+            hardware.bluetooth.enable = true;
+
 	    services.hardware.argonone.enable = true;
 
             fileSystems = {
@@ -68,7 +72,6 @@
           # local modules
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
-          ./configuration-bluetooth-rpi4.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
           ./configuration-users.nix
