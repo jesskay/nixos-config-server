@@ -1,5 +1,5 @@
 {
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
 
   inputs.nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -18,7 +18,7 @@
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
 
-            # This is a config that assumes 23.11's config defaults
+            # This is a config that uses 23.11 state where relevant
             system.stateVersion = "23.11";
 
             # Make `inputs` into a module argument for any that want it (e.g., for registry).
@@ -99,7 +99,7 @@
             # of this flake.
             system.configurationRevision = nixpkgs.lib.mkIf (self ? rev) self.rev;
 
-            # This is a config that assumes 22.11's config defaults
+            # This is a config that uses 22.11 state where relevant
             system.stateVersion = "22.11";
 
             # Make `inputs` into a module argument for any that want it (e.g., for registry).
