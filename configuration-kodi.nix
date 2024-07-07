@@ -7,7 +7,7 @@
   # enable kodi desktop session and automatically log into it on boot as the "kodi" user
   services.xserver.enable = true;
   services.xserver.desktopManager.kodi.enable = true;
-  services.xserver.displayManager.autoLogin = {
+  services.displayManager.autoLogin = {
     enable = true;
     user = "kodi";
   };
