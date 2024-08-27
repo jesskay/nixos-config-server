@@ -74,7 +74,6 @@
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
           ./configuration-homeassistant-container.nix
-          ./configuration-kodi.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
           ./configuration-users.nix
