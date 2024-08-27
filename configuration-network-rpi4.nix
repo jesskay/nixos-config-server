@@ -1,8 +1,11 @@
 { config, pkgs, pkgs-unstable, lib, ... }:
 {
+  # build kernel module for USB wifi adapter
+  boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821au ];
+
   networking.hostName = "rpi4";
   networking.wireless.enable = true;
-  networking.wireless.interfaces = [ "wlan0" ];
+  networking.wireless.interfaces = [ "wlp1s0u1u3" ];
   networking.wireless.networks = {
     "TP-LINK_7C8B".pskRaw = "@PSK_RAW@";
   };
