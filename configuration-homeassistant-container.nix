@@ -13,4 +13,6 @@
       "--network=host"
     ];
   };
+
+  networking.firewall.allowedTCPPorts = [ 8123 ];
 }
