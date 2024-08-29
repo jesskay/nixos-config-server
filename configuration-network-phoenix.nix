@@ -5,6 +5,18 @@
 
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
+  networking.interfaces.ens3.ipv6.addresses = [
+    {
+      address = "2a01:4f9:c011:ba17::1";
+      prefixLength = 64;
+    }
+  ];
+
+  networking.defaultGateway6 = {
+    address = "fe80::1";
+    interface = "ens3";
+  };
+
   services.openssh = {
     enable = true;
     openFirewall = false;
