@@ -152,7 +152,6 @@
           ./configuration-freshrss.nix
           ./configuration-network-phoenix.nix
           ./configuration-nix.nix
-          ./configuration-syncthing.nix
           ./configuration-users.nix
           ./configuration-web.nix
 
