@@ -6,17 +6,6 @@ let
 in
 
 {
-  # Mount hetzner volume as backing for syncthing's data dir
-  fileSystems.${cfg.dataDir} = {
-    device = "/dev/disk/by-label/volume-hel1-1";
-    fsType = "btrfs";
-    options = [
-      "discard"  # from hetzner's own instructions for mounting volumes, TRIMming is desirable
-      "defaults"
-      "subvol=@syncthing"
-    ];
-  };
-
   # Add regular user to syncthing's group
   users.users.jess.extraGroups = [ cfg.group ];
   # Ensure permissions are correct on the data dirs for group access
