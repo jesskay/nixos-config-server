@@ -29,23 +29,18 @@
 
             hardware.enableRedistributableFirmware = true;
 
-            boot.loader.grub.enable = false;
-            boot.loader.generic-extlinux-compatible.enable = true;
-            boot.kernelPackages = pkgs.linuxPackages_rpi4;
-            boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" ];
+            boot.loader.generic-extlinux-compatible.enable = false;
+            boot.loader.grub.enable = true;
+            boot.loader.grub.efiSupport = true;
+            boot.loader.grub.efiInstallAsRemovable = true;
+            boot.loader.grub.device = "nodev";
+            boot.loader.efi.canTouchEfiVariables = false;
+            boot.kernelPackages = pkgs.linuxPackages;
+            boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" "uas" ];
             boot.tmp.cleanOnBoot = true;
 	    boot.kernelParams = [
 	      "nohibernate"
 	    ];
-
-	    hardware = {
-	      raspberry-pi."4".apply-overlays-dtmerge.enable = true;
-              raspberry-pi."4".fkms-3d.enable = true;
-	      deviceTree = {
-	        enable = true;
-		filter = "bcm2711-rpi-4*.dtb";
-	      };
-	    };
 
             sound.enable = true;
             hardware.pulseaudio.enable = true;
@@ -58,6 +53,10 @@
               "/" = {
                 device = "/dev/disk/by-label/NIXOS_SD";
                 fsType = "ext4";
+              };
+              "/boot" = {
+                device = "/dev/disk/by-label/ESP";
+                fsType = "vfat";
               };
             };
 
