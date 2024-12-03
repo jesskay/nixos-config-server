@@ -8,15 +8,15 @@
   networking.wireless.interfaces = [ "wlp1s0u1u3" ];
   networking.wireless.networks = {
     "TP-LINK_7C8B_5G" = {
-      pskRaw = "@PSK_RAW_5G@";
+      pskRaw = "ext:PSK_RAW_5G";
       priority = 10;
     };
     "TP-LINK_7C8B" = {
-      pskRaw = "@PSK_RAW@";
+      pskRaw = "ext:PSK_RAW";
       priority = 1;
     };
   };
-  networking.wireless.environmentFile = config.age.secrets.wireless.path;
+  networking.wireless.secretsFile = config.age.secrets.wireless.path;
 
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 

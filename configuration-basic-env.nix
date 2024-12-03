@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
 {
-  sound.enable = true;
-
   programs.tmux = {
     enable = true;
     terminal = "screen-256color";
