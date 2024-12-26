@@ -72,7 +72,6 @@
           ./configuration-homeassistant-container.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
-          ./configuration-socks.nix
           ./configuration-syncthing.nix
           ./configuration-users.nix
           ./configuration-xrdp.nix
