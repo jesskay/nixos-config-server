@@ -69,12 +69,13 @@
           # local modules
           ./configuration-agenix.nix
           ./configuration-basic-env.nix
+          ./configuration-freshrss.nix
           ./configuration-homeassistant-container.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
           ./configuration-syncthing.nix
           ./configuration-users.nix
-          ./configuration-xrdp.nix
+          ./configuration-web.nix
 
           # upstream modules from a newer nixos (current module must be disabled below if present in both versions)
           # : modules paths as strings: "${nixpkgs-unstable}/nixos/modules/path/to/module.nix"
