@@ -71,6 +71,7 @@
           ./configuration-basic-env.nix
           ./configuration-freshrss.nix
           ./configuration-homeassistant-container.nix
+          ./configuration-munin.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
           ./configuration-syncthing.nix
