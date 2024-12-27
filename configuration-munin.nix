@@ -33,6 +33,13 @@
         "users"
         "vmstat"
       ];
+      extraPluginConfig = ''
+        [df]
+        env.exclude none unknown rootfs iso9660 squashfs udf romfs ramfs debugfs cgroup_root devtmpfs tmpfs
+
+        [df_abs]
+        env.exclude none unknown rootfs iso9660 squashfs udf romfs ramfs debugfs cgroup_root devtmpfs tmpfs
+      '';
     };
 
     munin-cron = {
@@ -41,6 +48,11 @@
         [${config.networking.hostName}]
         address localhost
       '';
+    };
+
+    nginx.simpleVhosts."munin.psquid.net" = {
+      vhostType = "static";
+      webroot = "/var/www/munin";
     };
   };
 }
