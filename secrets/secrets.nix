@@ -4,8 +4,7 @@ let
   users = [ userJessPaimon userJessRpi ];
 
   sysRpi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFj7yhCk3WMYkPYtyTDhx8DRH42BUo3JbwYdT/kHLjZ";
-  sysPhoenix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/MN4p2yuzHgXQ2rTertXQbRpOK43Ctr9GnD/c2m9BJ";
-  systems = [ sysRpi sysPhoenix ];
+  systems = [ sysRpi ];
 in
 {
   "wireless.age".publicKeys = users ++ systems;
