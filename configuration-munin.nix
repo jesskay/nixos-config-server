@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
   services = {
@@ -47,6 +47,9 @@
       hosts = ''
         [${config.networking.hostName}]
         address localhost
+      '';
+      extraGlobalConfig = ''
+        contact.ntfy.command ${pkgs.curl}/bin/curl -H "Title: Munin alert" -H "Tags: warning" -T - localhost:8546/munin_alerts
       '';
     };
 
