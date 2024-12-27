@@ -74,6 +74,7 @@
           ./configuration-munin.nix
           ./configuration-network-rpi4.nix
           ./configuration-nix.nix
+          ./configuration-ntfy.nix
           ./configuration-syncthing.nix
           ./configuration-users.nix
           ./configuration-web.nix
