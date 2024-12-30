@@ -44,9 +44,11 @@
       ''
         case $1 in
           config)
+            echo 'graph_args -l 0'
             echo 'graph_title Nixpkgs age'
             echo 'graph_vlabel days'
             echo 'nixpkgs_age.label age'
+            echo 'graph_scale no'
             echo 'graph_category system'
             echo 'nixpkgs_age.warning 30'
             echo 'nixpkgs_age.critical 60'
@@ -58,6 +60,39 @@
 
         echo -n "nixpkgs_age.value "
         echo "scale=2; ($(${pkgs.coreutils}/bin/date +%s) - ${toString inputs.nixpkgs.lastModified}) / (60 * 60 * 24)" | ${pkgs.bc}/bin/bc
+      '';
+      extraPlugins.nix_store_count = pkgs.writeScript "nix_store_count"
+      ''
+        case $1 in
+          config)
+            echo 'graph_title Nix store size (count)'
+            echo 'graph_vlabel count'
+            echo 'nix_store_count.label count'
+            echo 'graph_category system'
+            echo 'graph_info The number of realized (non-.drv) items currently in the nix store.'
+            exit 0
+            ;;
+        esac
+
+        echo -n 'nix_store_count.value '
+        ls -1 /nix/store | ${pkgs.gnugrep}/bin/grep -v '\.drv$' | wc -l
+      '';
+      extraPlugins.nix_store_bytes = pkgs.writeScript "nix_store_bytes"
+      ''
+        case $1 in
+          config)
+            echo 'graph_args --base 1024'
+            echo 'graph_title Nix store size (bytes)'
+            echo 'graph_vlabel bytes'
+            echo 'nix_store_bytes.label bytes'
+            echo 'graph_category system'
+            echo 'graph_info The total size in bytes of the nix store.'
+            exit 0
+            ;;
+        esac
+
+        echo -n 'nix_store_bytes.value '
+        du -bs /nix/store | cut -f1
       '';
     };
 
