@@ -94,6 +94,24 @@
         echo -n 'nix_store_bytes.value '
         du -bs /nix/store | cut -f1
       '';
+      extraPlugins.munin_graph_count = pkgs.writeScript "munin_graph_count"
+      ''
+        case $1 in
+          config)
+            echo 'graph_args -l 0'
+            echo 'graph_title Number of graphs'
+            echo 'graph_scale no'
+            echo 'graph_vlabel graphs'
+            echo 'munin_graph_count.label graphs'
+            echo 'graph_category why'
+            echo 'graph_info The number of graphs on the dashboard.'
+            exit 0
+            ;;
+        esac
+
+        echo -n 'munin_graph_count.value '
+        printf 'list\nquit\n' | ${pkgs.netcat}/bin/nc localhost 4949 | ${pkgs.gnugrep}/bin/grep -v '^#' | wc -w
+      '';
     };
 
     munin-cron = {
