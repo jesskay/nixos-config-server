@@ -51,7 +51,7 @@
             echo 'nixpkgs_unstable_age.label nixpkgs-unstable'
             echo 'configuration_age.label configuration'
             echo 'graph_scale no'
-            echo 'graph_category system'
+            echo 'graph_category nix'
             echo 'nixpkgs_age.warning 30'
             echo 'nixpkgs_age.critical 60'
             echo 'nixpkgs_unstable_age.warning 30'
@@ -78,7 +78,7 @@
             echo 'graph_title Nix store size (count)'
             echo 'graph_vlabel count'
             echo 'nix_store_count.label count'
-            echo 'graph_category system'
+            echo 'graph_category nix'
             echo 'graph_info The number of realized (non-.drv) items currently in the nix store.'
             exit 0
             ;;
@@ -95,7 +95,7 @@
             echo 'graph_title Nix store size (bytes)'
             echo 'graph_vlabel bytes'
             echo 'nix_store_bytes.label bytes'
-            echo 'graph_category system'
+            echo 'graph_category nix'
             echo 'graph_info The total size in bytes of the nix store.'
             exit 0
             ;;
