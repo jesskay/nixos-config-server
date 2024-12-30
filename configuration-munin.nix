@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   services = {
@@ -39,6 +39,25 @@
 
         [df_abs]
         env.exclude none unknown rootfs iso9660 squashfs udf romfs ramfs debugfs cgroup_root devtmpfs tmpfs
+      '';
+      extraPlugins.nixpkgs_age = pkgs.writeScript "nixpkgs_age"
+      ''
+        case $1 in
+          config)
+            echo 'graph_title Nixpkgs age'
+            echo 'graph_vlabel days'
+            echo 'nixpkgs_age.label age'
+            echo 'graph_category system'
+            echo 'nixpkgs_age.warning 30'
+            echo 'nixpkgs_age.critical 60'
+            echo 'graph_info The nixpkgs age describes how many days since the last commit to the nixpkgs instance used to build the current system. This will typically be at least a few days even after a fresh update, due to the time taken for commits to pass hydra.'
+            echo 'nixpkgs_age.info Nixpkgs age for the five minutes.'
+            exit 0
+            ;;
+        esac
+
+        echo -n "nixpkgs_age.value "
+        echo "scale=2; ($(${pkgs.coreutils}/bin/date +%s) - ${toString inputs.nixpkgs.lastModified}) / (60 * 60 * 24)" | ${pkgs.bc}/bin/bc
       '';
     };
 
