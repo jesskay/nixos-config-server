@@ -45,21 +45,31 @@
         case $1 in
           config)
             echo 'graph_args -l 0'
-            echo 'graph_title Nixpkgs age'
+            echo 'graph_title Flake age'
             echo 'graph_vlabel days'
-            echo 'nixpkgs_age.label age'
+            echo 'nixpkgs_age.label nixpkgs'
+            echo 'nixpkgs_unstable_age.label nixpkgs-unstable'
+            echo 'configuration_age.label configuration'
             echo 'graph_scale no'
             echo 'graph_category system'
             echo 'nixpkgs_age.warning 30'
             echo 'nixpkgs_age.critical 60'
-            echo 'graph_info The nixpkgs age describes how many days since the last commit to the nixpkgs instance used to build the current system. This will typically be at least a few days even after a fresh update, due to the time taken for commits to pass hydra.'
-            echo 'nixpkgs_age.info Nixpkgs age for the five minutes.'
+            echo 'nixpkgs_unstable_age.warning 30'
+            echo 'nixpkgs_unstable_age.critical 60'
+            echo 'graph_info The flake age describes how many days since the last commit to the flakes used to build the current system. For nixpkgs inputs this will typically be at least a few days even after a fresh update, due to the time taken for commits to pass hydra.'
+            echo 'nixpkgs_age.info Nixpkgs stable flake age.'
+            echo 'nixpkgs_unstable_age.info Nixpkgs unstable flake age.'
+            echo 'configuration_age.info System configuration flake age.'
             exit 0
             ;;
         esac
 
         echo -n "nixpkgs_age.value "
         echo "scale=2; ($(${pkgs.coreutils}/bin/date +%s) - ${toString inputs.nixpkgs.lastModified}) / (60 * 60 * 24)" | ${pkgs.bc}/bin/bc
+        echo -n "nixpkgs_unstable_age.value "
+        echo "scale=2; ($(${pkgs.coreutils}/bin/date +%s) - ${toString inputs.nixpkgs-unstable.lastModified}) / (60 * 60 * 24)" | ${pkgs.bc}/bin/bc
+        echo -n "configuration_age.value "
+        echo "scale=2; ($(${pkgs.coreutils}/bin/date +%s) - ${toString inputs.self.lastModified}) / (60 * 60 * 24)" | ${pkgs.bc}/bin/bc
       '';
       extraPlugins.nix_store_count = pkgs.writeScript "nix_store_count"
       ''
