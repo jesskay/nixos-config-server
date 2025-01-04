@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, lib, ... }:
+{ config, pkgs-unstable, lib, ... }:
 {
   # enable acme here for the vhost which the freshrss service will create
   services.nginx.virtualHosts."reader.psquid.net" = {

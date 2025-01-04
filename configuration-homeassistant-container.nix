@@ -1,5 +1,3 @@
-{ config, pkgs, lib, ... }:
-
 {
   virtualisation.oci-containers.backend = "podman";
 

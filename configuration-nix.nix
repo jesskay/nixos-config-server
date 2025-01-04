@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ pkgs, inputs, ... }:
 {
   # configure NIX_PATH entries
   nix.nixPath = [

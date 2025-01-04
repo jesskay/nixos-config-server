@@ -1,4 +1,3 @@
-{ config, pkgs, lib, ... }:
 {
   imports = [ ./mod-simple-nginx.nix ];
 

@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, lib, ... }:
+{ config, pkgs-unstable, ... }:
 {
   # build kernel module for USB wifi adapter
   boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821au ];
