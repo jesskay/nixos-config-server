@@ -1,14 +1,4 @@
-{ config, pkgs, lib, ... }:
-
-let
-
-  sources = import ./sources.nix;
-
-  nixpkgs-unstable-path = sources.nixpkgs-unstable.outPath;
-
-  pkgs-unstable = import nixpkgs-unstable-path { inherit (pkgs) system; };
-
-in
+{ config, pkgs-unstable, lib, ... }:
 
 {
   # enable acme here for the vhost which the freshrss service will create

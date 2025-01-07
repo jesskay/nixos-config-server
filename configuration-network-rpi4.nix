@@ -1,14 +1,4 @@
-{ config, pkgs, ... }:
-
-let
-
-  sources = import ./sources.nix;
-
-  nixpkgs-unstable-path = sources.nixpkgs-unstable.outPath;
-
-  pkgs-unstable = import nixpkgs-unstable-path { inherit (pkgs) system; };
-
-in
+{ config, pkgs-unstable, ... }:
 
 {
   # build kernel module for USB wifi adapter

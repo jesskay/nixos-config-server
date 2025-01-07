@@ -27,6 +27,9 @@ in
     "${sources.nixos-hardware}/raspberry-pi/4"
   ];
 
+  # Instantiate pkgs-unstable with the same system and overlays as pkgs, and add it to module args.
+  _module.args.pkgs-unstable = import sources.nixpkgs-unstable.outPath { inherit (pkgs) system overlays; };
+
   # This is a config that uses 23.11 state where relevant
   system.stateVersion = "23.11";
 
