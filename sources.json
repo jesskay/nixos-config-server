@@ -1,0 +1,26 @@
+{
+  "nixpkgs-unstable": {
+    "url": "git@github.com:NixOS/nixpkgs.git",
+    "branch": "nixos-unstable",
+    "rev": "8f3e1f807051e32d8c95cd12b9b421623850a34d",
+    "narHash": "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="
+  },
+  "nixpkgs": {
+    "url": "git@github.com:NixOS/nixpkgs.git",
+    "branch": "nixos-24.11",
+    "rev": "cbd8ec4de4469333c82ff40d057350c30e9f7d36",
+    "narHash": "sha256-DjkQPnkAfd7eB522PwnkGhOMuT9QVCZspDpJJYyOj60="
+  },
+  "agenix": {
+    "url": "git@github.com:ryantm/agenix.git",
+    "branch": "main",
+    "rev": "f6291c5935fdc4e0bef208cfc0dcab7e3f7a1c41",
+    "narHash": "sha256-b+uqzj+Wa6xgMS9aNbX4I+sXeb5biPDi39VgvSFqFvU="
+  },
+  "nixos-hardware": {
+    "url": "git@github.com:NixOS/nixos-hardware",
+    "branch": "master",
+    "rev": "ca30f8501ab452ca687a7fdcb2d43e1fb1732317",
+    "narHash": "sha256-uTdscVaKjnRnBIMuu/oWwdiGhYd/JOQ4YZGHeCoroqs="
+  }
+}
