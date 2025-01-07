@@ -1,9 +1,8 @@
 { pkgs, ... }:
 
 let
-  sources = builtins.mapAttrs
-    (src-name: src: builtins.fetchTree { type = "git"; url = src.url; rev = src.rev; narHash = src.narHash; })
-    (builtins.fromJSON (builtins.readFile ./sources.json));
+
+  sources = import ./sources.nix;
 
 in
 
