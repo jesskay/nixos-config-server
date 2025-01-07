@@ -11,10 +11,12 @@ let
 in {
 
   nixos-rebuild-wrapped = pkgs.writeShellScriptBin "nixos-rebuild-wrapped" ''
-    config_path="$PWD/configuration.nix"
+    hostname="$(${pkgs.nettools}/bin/hostname)"
+
+    config_path="$PWD/hosts/$hostname/default.nix"
 
     if ! [[ -e "$config_path" ]]; then
-      echo "ERROR: Configuration $config_path does not exist."
+      echo "ERROR: No configuration exists for host '$hostname'."
       exit 1
     fi
 

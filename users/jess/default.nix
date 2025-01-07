@@ -1,16 +1,24 @@
 { pkgs, ... }:
 
 {
-  security.sudo.wheelNeedsPassword = false;
 
   users.users.jess = {
+
     isNormalUser = true;
+
     home = "/home/jess";
+
     description = "Jessica Kay";
+
     extraGroups = [ "wheel" ];
+
     packages = with pkgs; [
       jq
+      git
+      ripgrep
+      bat
     ];
+
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAjqruCmhDeW4YrVqjzcHi94BcmDbmFdEUHgr4aHiuPdcS2uavmWPeu9xqhsBy+8njUnpJydPReE+XK7nE558ZxBgvIBhRr5s0FEVfdsarnJ5VUBx0e3TRzpXTgwqm2MinPb/Q0NUHGSYuXp2OMtNpMvxamMzifskh+F92b6LVo+2j10RiaigbH5oXbXzeHcZxGavyYggZ8mM2KatzIReVTb6mmzZ+Ct8xQLxkxJZvBfKNVjv0urmDSrpHm/x2J41z6/DQ95TCWs2m/EBmiRgrHs0uETjcEwqHkl1henrmyBGVwr9pJ/FunQuBqCRx/XPQ+v9iMtGyed7GV5LeqJjk5Q== DIAMOND"
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwI9mhy9tkKnHbqpqKOKgN5ioFiwUcrH+R3zVSp468xytAEctbiHMPTfNmsZwK/cCd5zy8DDYWsshfn8JuxRswPIlmt+mICviXm1KL1UNJvPBGusLR/pMu805q7n46P3kBhr2i6wqF2Mr5lGZ8sgiLQdGOeDKoMs0Co7U9XBhjVmqvIMFs32sgQsuX0pjd8O82hBK4fndVwQ7PcdKVI5M3/puCPUzOyykzeKlsPYjJYAhO4T9Mce++ZTsOuZxFwrYRTpHRm3ldrawVTTWJyZgOFufoA/7Et0WODhqjKeRLxqo5le768W4ZhCwGnSdbInLRXG+qA7Urcql1hPyQZTv4CuJDqGlrlEB8zwUNL2XOUthF1DLzFtp/JzYe2AK1viFBOZ6CShTJxnXpWAalxdS61nlqQywfHfFSnFcnYZwKVU8YS3O61DnNdR/UttvvO5fyduUUWn8DasJyxoYt+aC70xP6zw6pJema8bM9EQO/kY4YNNeBmGnx4uWoeq6sXEE= u0_a358@localhost"
@@ -25,5 +33,7 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQD5rgzxdtDKibJMpmmUMYBb8EWeZA6x1onGxwR24OzFs4gSfMkge5SsInNbaLXZXDkDWGXo5+A434NdZ3IiIt/5wmn1M6i0z4mGxlKNlbmgcp2fHE+YwfD474kZfKhRLlx9KPFIvRj/OJJFgIRmMxbFYNPP3kaftvkNubjS6zoSAZf7bg8YGdeh5IJULMrILaVojYledkU1y6Fg/Avj0RjfhIhfm0JXuQcYpYhFN8hcN79KXm+HInVQrcOyUNQ9ut3YwXZTiulbiduNGKnSCWGcBKBTIDIpI05U0FKe4HZ3AY8AAIztHlKC180tB27deeNppv1EXWxweBrpvAkOS/59/Y1YkW5V7DjWT7jmU6Dzl04/t1Yx2Yk+V3awoo1KVJ94WjPadUdTfFWqxBFx2tsxOTCDfoQE/128vZtHTXME+O+KqHKeQd3w4zIvzWzAUdHzHCVEIw7oyKQD9If7D3kZ2yRd/V4a0o/ahxhiMAZeBI+C2iX4VY0Rv+Ad5o2fRMwfr9EGwCLs5caTsAan4aP9S2fec3UUH0SKe0iLQ18KGXUdHljL2sxplW51vbWi6IVWnBgrczHQZYXRwzeLcMIyqA/W0Fyin2gD+sg22KXRjcA1E1wL/ZPk/CR/hAkFsQiOY89KKIfsTz/3ezymZvL69M2/LV5aDG1XbdypwyR8nw== ShellFish@iPad-31072023"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMvizvex1rYdEYEVKsGzBTDQmztVEIyWpONBKN4joj6w robin@sitri"
     ];
+
   };
+
 }

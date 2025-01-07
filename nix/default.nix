@@ -2,11 +2,12 @@
 
 let
 
-  sources = import ./sources.nix;
+  sources = import ../sources.nix;
 
 in
 
 {
+
   # Enable flakes explicitly - this is implicit in a flake-based config.
   nix.settings.experimental-features = "nix-command flakes";
 
@@ -36,7 +37,6 @@ in
       }
     '';
   in ''
-    experimental-features = nix-command flakes
     flake-registry = ${dummyRegistry}
   '';
 
@@ -47,11 +47,12 @@ in
     dates = "weekly";
   };
 
-  # trust root (and @wheel, as users in @wheel could become root
-  # to bypass trust anyway so excluding them is reduced convenience
-  # for no benefit)
+  # trust root (and @wheel, as users in @wheel could become root to bypass trust anyway,
+  # so excluding them is reduced convenience for no benefit)
   nix.settings.trusted-users = [
     "root"
     "@wheel"
   ];
+
 }
+

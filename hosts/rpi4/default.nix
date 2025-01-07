@@ -2,30 +2,59 @@
 
 let
 
-  sources = import ./sources.nix;
+  sources = import ../../sources.nix;
 
 in
 
 {
 
   imports = [
-    # local modules
-    ./configuration-agenix.nix
-    ./configuration-basic-env.nix
-    ./configuration-freshrss.nix
-    ./configuration-homeassistant-container.nix
-    ./configuration-munin.nix
-    ./configuration-network-rpi4.nix
-    ./configuration-nix.nix
-    ./configuration-ntfy.nix
-    ./configuration-syncthing.nix
-    ./configuration-users.nix
-    ./configuration-web.nix
+    # services
+    ../../services/freshrss
+    ../../services/home-assistant
+    ../../services/munin
+    ../../services/ntfy
+    ../../services/sites
+    ../../services/syncthing
+    ../../services/tailscale
+
+    # users
+    ../../users/jess
+
+    # networking configuration
+    ./network.nix
+
+    # system-wide programs
+    ../../programs/neovim
+    ../../programs/starship
+    ../../programs/tmux
+
+    # nix configuration
+    ../../nix
+
+    # option-provider modules
+    ../../modules/simple-nginx
 
     # external modules
     "${sources.agenix}/modules/age.nix"
     "${sources.nixos-hardware}/raspberry-pi/4"
   ];
+
+  # set hostname
+  networking.hostName = "rpi4";
+
+  # enable SSH
+  services.openssh = {
+    enable = true;
+    openFirewall = false;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+    };
+  };
+
+  # allow sudo without password for %wheel
+  security.sudo.wheelNeedsPassword = false;
 
   # Instantiate pkgs-unstable with the same system and overlays as pkgs, and add it to module args.
   _module.args.pkgs-unstable = import sources.nixpkgs-unstable.outPath { inherit (pkgs) system overlays; };
@@ -35,23 +64,35 @@ in
 
   hardware.enableRedistributableFirmware = true;
 
+  # configure as a grub-based EFI install
   boot.loader.generic-extlinux-compatible.enable = false;
   boot.loader.grub.enable = true;
   boot.loader.grub.efiSupport = true;
   boot.loader.grub.efiInstallAsRemovable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.efi.canTouchEfiVariables = false;
+
+  # use the upstream (not rpi) kernel
   boot.kernelPackages = pkgs.linuxPackages;
+
+  # allow USB HID and storage (latter required as the system drive is connected via USB) in initrd
   boot.initrd.availableKernelModules = [ "usbhid" "usb_storage" "uas" ];
+
+  # clean /tmp on boot
   boot.tmp.cleanOnBoot = true;
+
+  # do not enable hibernation
   boot.kernelParams = [
     "nohibernate"
   ];
 
+  # enable bluetooth
   hardware.bluetooth.enable = true;
 
+  # enable Argon One case features (e.g., fan control)
   services.hardware.argonone.enable = true;
 
+  # configure root on USB-attached SSD, /boot on microSD
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
@@ -63,8 +104,10 @@ in
     };
   };
 
+  # configure swap file
   swapDevices = [ { device = "/swap"; } ];
 
+  # add rpi tools and agenix to PATH
   environment.systemPackages = with pkgs; [
     libraspberrypi
     raspberrypi-eeprom

@@ -22,5 +22,17 @@
     "branch": "master",
     "rev": "ca30f8501ab452ca687a7fdcb2d43e1fb1732317",
     "narHash": "sha256-uTdscVaKjnRnBIMuu/oWwdiGhYd/JOQ4YZGHeCoroqs="
+  },
+  "freshrss-langfeld": {
+    "url": "https://github.com/langfeld/FreshRSS-extensions",
+    "branch": "master",
+    "rev": "49c33360638b4ed1baf8217d862e1f05e01812c4",
+    "narHash": "sha256-8ZZv9/1i3wTwDSiG2KgN5uUAZql72N4hqu/rhdaqfdU="
+  },
+  "freshrss-cntools": {
+    "url": "https://github.com/cn-tools/cntools_FreshRssExtensions",
+    "branch": "master",
+    "rev": "878fb05675a90ddb8ab308b472ad2139d5725de8",
+    "narHash": "sha256-tKe2Ix+VE56p5zkjfsdU9AiRw3s4jDoJJufYXci6jdY="
   }
 }
