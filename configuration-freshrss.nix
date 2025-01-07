@@ -1,4 +1,16 @@
-{ config, pkgs-unstable, lib, ... }:
+{ config, pkgs, lib, ... }:
+
+let
+  sources = builtins.mapAttrs
+    (src-name: src: builtins.fetchTree { type = "git"; url = src.url; rev = src.rev; narHash = src.narHash; })
+    (builtins.fromJSON (builtins.readFile ./sources.json));
+
+  nixpkgs-unstable-path = sources.nixpkgs-unstable.outPath;
+
+  pkgs-unstable = import nixpkgs-unstable-path { inherit (pkgs) system; };
+
+in
+
 {
   # enable acme here for the vhost which the freshrss service will create
   services.nginx.virtualHosts."reader.psquid.net" = {

@@ -1,4 +1,16 @@
-{ config, pkgs-unstable, ... }:
+{ config, pkgs, ... }:
+
+let
+  sources = builtins.mapAttrs
+    (src-name: src: builtins.fetchTree { type = "git"; url = src.url; rev = src.rev; narHash = src.narHash; })
+    (builtins.fromJSON (builtins.readFile ./sources.json));
+
+  nixpkgs-unstable-path = sources.nixpkgs-unstable.outPath;
+
+  pkgs-unstable = import nixpkgs-unstable-path { inherit (pkgs) system; };
+
+in
+
 {
   # build kernel module for USB wifi adapter
   boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821au ];

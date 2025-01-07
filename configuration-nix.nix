@@ -1,24 +1,29 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
+
+let
+  sources = builtins.mapAttrs
+    (src-name: src: builtins.fetchTree { type = "git"; url = src.url; rev = src.rev; narHash = src.narHash; })
+    (builtins.fromJSON (builtins.readFile ./sources.json));
+
+in
+
 {
-  # configure NIX_PATH entries
-  nix.nixPath = [
-    "nixpkgs=/nix/var/nix/profiles/per-user/root/channels/nixos"
-    "/nix/var/nix/profiles/per-user/root/channels"
-  ];
+  # Enable flakes explicitly - this is implicit in a flake-based config.
+  nix.settings.experimental-features = "nix-command flakes";
 
-  # set up various useful registry entries
+  # Set the NIX_PATH to point <nixpkgs> to the flake set up in the registry below.
+  nix.nixPath = ["nixpkgs=flake:nixpkgs"];
+
+  # set up various useful flake registry entries
   nix.registry = {
-    # `nixpkgs` is set to the same nixpkgs flake used to build this configuration
-    nixpkgs.flake = inputs.nixpkgs;
+    # `nixpkgs` is set to the nixpkgs source used to build this configuration
+    nixpkgs.to = { type = "path"; path = sources.nixpkgs.outPath; };
 
-    # `nixpkgs-unstable` is set to this flake's nixos-unstable input
-    nixpkgs-unstable.flake = inputs.nixpkgs-unstable;
+    # `nixpkgs-unstable` is set to the nixpkgs-unstable source
+    nixpkgs-unstable.to = { type = "path"; path = sources.nixpkgs-unstable.outPath; };
 
     # `templates` is set to the same as the global registry, so `nix flake init` can work
     templates.to = { type = "github"; owner = "NixOS"; repo = "templates"; };
-
-    # `active-config` is set to the flake the current system was built from
-    active-config.flake = inputs.self;
   };
 
   # point global repository to a dummy file
