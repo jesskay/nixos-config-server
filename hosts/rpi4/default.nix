@@ -10,6 +10,7 @@ in
 
   imports = [
     # services
+    ../../services/calibre-web
     ../../services/freshrss
     ../../services/home-assistant
     ../../services/munin

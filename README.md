@@ -55,6 +55,8 @@ Secrets used by various modules, encrypted using [agenix][agenix].
 
 Configuration for services:
 
+- [Calibre-Web][calibre-web]
+
 - [FreshRSS][freshrss] plus extensions
 
 - [Home Assistant][home-assistant] in a podman container
@@ -103,6 +105,7 @@ experimental status).
 
 
 [agenix]: https://github.com/ryantm/agenix
+[calibre-web]: https://github.com/janeczku/calibre-web
 [freshrss]: https://www.freshrss.org/
 [home-assistant]: https://www.home-assistant.io/
 [munin]: https://munin-monitoring.org/
