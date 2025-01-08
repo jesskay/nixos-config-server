@@ -3,5 +3,5 @@ set -euo pipefail
 
 cd $(dirname $0)
 
-nix run -f ./default.nix nixos-rebuild-wrapped -- "$@"
+nix run -f ./build.nix nixos-rebuild-wrapped -- "$@"
 
