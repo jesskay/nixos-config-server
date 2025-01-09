@@ -1,15 +1,8 @@
-{ config, pkgs-unstable, ... }:
+{ config, ... }:
 
 {
 
-  services.tailscale = {
-
-    enable = true;
-
-    # stable nixpkgs tends to be somewhat out of date, as tailscale updates frequently
-    package = pkgs-unstable.tailscale;
-
-  };
+  services.tailscale.enable = true;
 
   # add tailscale to PATH, using the same package as the service
   environment.systemPackages = [ config.services.tailscale.package ];

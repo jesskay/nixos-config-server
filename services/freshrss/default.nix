@@ -1,4 +1,4 @@
-{ config, pkgs-unstable, ... }:
+{ config, pkgs, ... }:
 
 let
 
@@ -18,7 +18,7 @@ in
 
     enable = true;
 
-    package = pkgs-unstable.freshrss.overrideAttrs (super: {
+    package = pkgs.freshrss.overrideAttrs (super: {
       installPhase = super.installPhase + ''
         mkdir -p $out/extensions
         ln -s ${sources.freshrss-langfeld}/xExtension-FixedNavMenu $out/extensions/xExtension-FixedNavMenu

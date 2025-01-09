@@ -2,7 +2,7 @@ let
 
   sources = import ./sources.nix;
 
-  nixpkgs-path = sources.nixpkgs.outPath;
+  nixpkgs-path = sources.nixpkgs-unstable.outPath;
 
   system = builtins.currentSystem;
 
