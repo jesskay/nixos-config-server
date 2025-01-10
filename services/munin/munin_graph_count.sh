@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-case $1 in
+case ${1:-} in
   config)
     echo 'graph_args -l 0'
     echo 'graph_title Number of graphs'
@@ -12,8 +12,6 @@ case $1 in
     exit 0
     ;;
 esac
-
-#%PATH%#
 
 echo -n 'munin_graph_count.value '
 printf 'list\nquit\n' | nc localhost 4949 | grep -v '^#' | wc -w

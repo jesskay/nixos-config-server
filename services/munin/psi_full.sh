@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-case $1 in
+case ${1:-} in
   config)
     echo 'graph_args -l 0'
     echo 'graph_scale no'
@@ -14,8 +14,6 @@ case $1 in
     exit 0
     ;;
 esac
-
-#%PATH%#
 
 echo -n 'psi_cpu.value '
 grep '^full' /proc/pressure/cpu | sed -E 's/^.*\savg300=(.*)\s.*$/\1/'

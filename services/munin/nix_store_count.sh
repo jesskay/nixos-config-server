@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-case $1 in
+case ${1:-} in
   config)
     echo 'graph_title Nix store size (count)'
     echo 'graph_vlabel count'
@@ -10,8 +10,6 @@ case $1 in
     exit 0
     ;;
 esac
-
-#%PATH%#
 
 echo -n 'nix_store_count.value '
 find /nix/store -maxdepth 1 -not -name '*.drv' -printf '.' | wc -c

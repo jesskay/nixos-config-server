@@ -45,9 +45,11 @@
     '';
 
     extraPlugins = let
-      runtimeDeps = with pkgs; [ gnugrep gnused netcat ];
-      injectPaths = builtins.replaceStrings ["#%PATH%#"] ["PATH=${lib.makeBinPath runtimeDeps}"];
-      mkPlugin = pluginName: pkgs.writeShellScript pluginName (injectPaths (builtins.readFile ./${pluginName}.sh));
+      mkPlugin = pluginName: lib.getExe (pkgs.writeShellApplication {
+        name = pluginName;
+        runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils ];
+        text = builtins.readFile ./${pluginName}.sh;
+      });
       pluginNames = [
         "nix_store_count"
         "nix_store_bytes"

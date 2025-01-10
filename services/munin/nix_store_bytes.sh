@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-case $1 in
+case ${1:-} in
   config)
     echo 'graph_args --base 1024'
     echo 'graph_title Nix store size (bytes)'
@@ -11,8 +11,6 @@ case $1 in
     exit 0
     ;;
 esac
-
-#%PATH%#
 
 echo -n 'nix_store_bytes.value '
 du -bs /nix/store | cut -f1
