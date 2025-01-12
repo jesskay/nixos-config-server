@@ -3,36 +3,42 @@
     "url": "https://github.com/NixOS/nixpkgs",
     "branch": "nixos-unstable",
     "rev": "bffc22eb12172e6db3c5dde9e3e5628f8e3e7912",
-    "narHash": "sha256-8YVQ9ZbSfuUk2bUf2KRj60NRraLPKPS0Q4QFTbc+c2c="
+    "narHash": "sha256-8YVQ9ZbSfuUk2bUf2KRj60NRraLPKPS0Q4QFTbc+c2c=",
+    "lastModified": 1736344531
   },
   "nixpkgs": {
     "url": "https://github.com/NixOS/nixpkgs",
     "branch": "nixos-24.11",
     "rev": "3f0a8ac25fb674611b98089ca3a5dd6480175751",
-    "narHash": "sha256-JO+lFN2HsCwSLMUWXHeOad6QUxOuwe9UOAF/iSl1J4I="
+    "narHash": "sha256-JO+lFN2HsCwSLMUWXHeOad6QUxOuwe9UOAF/iSl1J4I=",
+    "lastModified": 1736025001
   },
   "agenix": {
     "url": "https://github.com/ryantm/agenix",
     "branch": "main",
     "rev": "f6291c5935fdc4e0bef208cfc0dcab7e3f7a1c41",
-    "narHash": "sha256-b+uqzj+Wa6xgMS9aNbX4I+sXeb5biPDi39VgvSFqFvU="
+    "narHash": "sha256-b+uqzj+Wa6xgMS9aNbX4I+sXeb5biPDi39VgvSFqFvU=",
+    "lastModified": 1723293904
   },
   "nixos-hardware": {
     "url": "https://github.com/NixOS/nixos-hardware",
     "branch": "master",
     "rev": "8870dcaff63dfc6647fb10648b827e9d40b0a337",
-    "narHash": "sha256-OL7leZ6KBhcDF3nEKe4aZVfIm6xQpb1Kb+mxySIP93o="
+    "narHash": "sha256-OL7leZ6KBhcDF3nEKe4aZVfIm6xQpb1Kb+mxySIP93o=",
+    "lastModified": 1736441705
   },
   "freshrss-langfeld": {
     "url": "https://github.com/langfeld/FreshRSS-extensions",
     "branch": "master",
     "rev": "49c33360638b4ed1baf8217d862e1f05e01812c4",
-    "narHash": "sha256-8ZZv9/1i3wTwDSiG2KgN5uUAZql72N4hqu/rhdaqfdU="
+    "narHash": "sha256-8ZZv9/1i3wTwDSiG2KgN5uUAZql72N4hqu/rhdaqfdU=",
+    "lastModified": 1490605343
   },
   "freshrss-cntools": {
     "url": "https://github.com/cn-tools/cntools_FreshRssExtensions",
     "branch": "master",
     "rev": "878fb05675a90ddb8ab308b472ad2139d5725de8",
-    "narHash": "sha256-tKe2Ix+VE56p5zkjfsdU9AiRw3s4jDoJJufYXci6jdY="
+    "narHash": "sha256-tKe2Ix+VE56p5zkjfsdU9AiRw3s4jDoJJufYXci6jdY=",
+    "lastModified": 1731562293
   }
 }

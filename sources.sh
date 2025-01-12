@@ -66,9 +66,10 @@ case $COMMAND in
 
 		for src in $(jq -r "keys[]" < "$SOURCES_JSON"); do
 			echo -e "\033[1mSource $src:\033[0m"
-			echo -e "  \033[1mURL:\033[0m       $(jq -r ".[\"$src\"].url" < "$SOURCES_JSON")"
-			echo -e "  \033[1mBranch:\033[0m    $(jq -r ".[\"$src\"].branch" < "$SOURCES_JSON")"
-			echo -e "  \033[1mRevision:\033[0m  $(jq -r ".[\"$src\"].rev" < "$SOURCES_JSON")"
+			echo -e "  \033[1mURL:\033[0m            $(jq -r ".[\"$src\"].url" < "$SOURCES_JSON")"
+			echo -e "  \033[1mBranch:\033[0m         $(jq -r ".[\"$src\"].branch" < "$SOURCES_JSON")"
+			echo -e "  \033[1mRevision:\033[0m       $(jq -r ".[\"$src\"].rev" < "$SOURCES_JSON")"
+			echo -e "  \033[1mLast modified:\033[0m  $(date -Iseconds --date "@$(jq -r ".[\"$src\"].lastModified" < "$SOURCES_JSON")")"
 			echo
 		done
 		;;
@@ -90,17 +91,20 @@ case $COMMAND in
 
 		echo "Getting latest revision..."
 		rev="$(git ls-remote "$2" "$3" | cut -f1)"
-		narHash="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --raw --expr '(builtins.fetchTree { type = "git"; url = "'"$2"'"; ref = "refs/heads/'"$3"'"; rev = "'"$rev"'"; }).narHash')"
+		metadata="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$2"'"; ref = "refs/heads/'"$3"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
+		narHash="$(echo "$metadata" | jq -r '.narHash')"
+		lastModified="$(echo "$metadata" | jq '.lastModified')"
 
 		tmp="$(mktemp --suffix '.json')"
 		cat "$SOURCES_JSON" > "$tmp"
-		jq ".[\"$1\"] = { \"url\": \"$2\", \"branch\": \"$3\", \"rev\": \"$rev\", \"narHash\": \"$narHash\" }" < "$tmp" > "$SOURCES_JSON"
+		jq ".[\"$1\"] = { \"url\": \"$2\", \"branch\": \"$3\", \"rev\": \"$rev\", \"narHash\": \"$narHash\", \"lastModified\": $lastModified }" < "$tmp" > "$SOURCES_JSON"
 		rm "$tmp"
 
 		echo -e "Added \033[1m$1\033[0m:"
-		echo -e "  \033[1mURL:\033[0m       $(jq -r ".[\"$1\"].url" < "$SOURCES_JSON")"
-		echo -e "  \033[1mBranch:\033[0m    $(jq -r ".[\"$1\"].branch" < "$SOURCES_JSON")"
-		echo -e "  \033[1mRevision:\033[0m  $(jq -r ".[\"$1\"].rev" < "$SOURCES_JSON")"
+		echo -e "  \033[1mURL:\033[0m            $(jq -r ".[\"$1\"].url" < "$SOURCES_JSON")"
+		echo -e "  \033[1mBranch:\033[0m         $(jq -r ".[\"$1\"].branch" < "$SOURCES_JSON")"
+		echo -e "  \033[1mRevision:\033[0m       $(jq -r ".[\"$1\"].rev" < "$SOURCES_JSON")"
+		echo -e "  \033[1mLast modified:\033[0m  $(date -Iseconds --date "@$(jq -r ".[\"$1\"].lastModified" < "$SOURCES_JSON")")"
 		;;
 	rm)     ;&
 	remove)
@@ -166,11 +170,13 @@ case $COMMAND in
 				echo -e "Already up to date."
 			else
 				echo -e "Updating to revision \033[1m$rev\033[0m..."
-				narHash="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --raw --expr '(builtins.fetchTree { type = "git"; url = "'"$url"'"; ref = "refs/heads/'"$branch"'"; rev = "'"$rev"'"; }).narHash')"
+				metadata="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$url"'"; ref = "refs/heads/'"$branch"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
+				narHash="$(echo "$metadata" | jq -r '.narHash')"
+				lastModified="$(echo "$metadata" | jq '.lastModified')"
 
 				tmp="$(mktemp --suffix '.json')"
 				cat "$SOURCES_JSON" > "$tmp"
-				jq ".[\"$src\"].rev = \"$rev\" | .[\"$src\"].narHash = \"$narHash\"" < "$tmp" > "$SOURCES_JSON"
+				jq ".[\"$src\"].rev = \"$rev\" | .[\"$src\"].narHash = \"$narHash\" | .[\"$src\"].lastModified = $lastModified" < "$tmp" > "$SOURCES_JSON"
 				rm "$tmp"
 
 				echo "Done."
