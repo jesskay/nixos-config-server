@@ -10,11 +10,19 @@ flakes.
 
 ### `hosts`
 
-Configurations for each host start in `hosts/HOSTNAME/default.nix`. From there,
-the configuration can pull in files from other parts of the hierarchy.
+Definitions for hosts are found in `hosts/default.nix`, with three fields:
 
-Configuration that is strictly only for one host will be in files under
-`hosts/HOSTNAME`, while all other configuration should be kept more general.
+- `system`: The system (e.g., x86\_64-linux, aarch64-darwin, ...) the host
+  runs on.
+
+- `config`: The base module of the host's configuration. By convention, this
+  is typically `hosts/HOSTNAME/default.nix`, but it doesn't have to be.
+
+- `nixpkgs`: A nixpkgs instance that the host's config will be built against.
+  This uses `sources` (see below) to get the path to a nixpkgs source tree, and
+  reuses `system` from above to set the system that should be built for.
+  This is also where changes to the nixpkgs instantiation (such as overlays)
+  should be made.
 
 
 ### `modules`
@@ -95,12 +103,10 @@ source types eventually.
 
 ### `build.sh` and `build.nix`
 
-Shell script and nix file that wrap `nixos-rebuild` in order to determine the
-hostname to build for, and to set the `NIX_PATH` appropriately for a
-non-channels and non-flake build. The latter part is heavily cribbed from
-[this article][jade-pinning], though adapted for not using npins (in favour of
-using `builtins.fetchTree`, which npins does not yet support due to its
-experimental status).
+Shell script and nix file that wrap `switch-to-configuration`, providing a less
+featureful but lighter alternative to `nixos-rebuild`. They build and optionally
+activate the configuration defined in `hosts` for a given hostname (by default,
+the current hostname of the system they're running on).
 
 
 
