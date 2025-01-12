@@ -89,7 +89,7 @@ case $COMMAND in
 
 		echo "Getting latest revision..."
 		rev="$(git ls-remote "$2" "$3" | cut -f1)"
-		narHash="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --raw --expr '(builtins.fetchTree { type = "git"; url = "'"$2"'"; rev = "'"$rev"'"; }).narHash')"
+		narHash="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --raw --expr '(builtins.fetchTree { type = "git"; url = "'"$2"'"; ref = "refs/heads/'"$3"'"; rev = "'"$rev"'"; }).narHash')"
 
 		tmp="$(mktemp --suffix '.json')"
 		cat "$SOURCES_JSON" > "$tmp"
@@ -165,7 +165,7 @@ case $COMMAND in
 				echo -e "Already up to date."
 			else
 				echo -e "Updating to revision \033[1m$rev\033[0m..."
-				narHash="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --raw --expr '(builtins.fetchTree { type = "git"; url = "'"$url"'"; rev = "'"$rev"'"; }).narHash')"
+				narHash="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --raw --expr '(builtins.fetchTree { type = "git"; url = "'"$url"'"; ref = "refs/heads/'"$branch"'"; rev = "'"$rev"'"; }).narHash')"
 
 				tmp="$(mktemp --suffix '.json')"
 				cat "$SOURCES_JSON" > "$tmp"
