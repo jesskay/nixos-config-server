@@ -1,5 +1,11 @@
 { config, pkgs, lib, ... }:
 
+let
+
+  sources = import ../../sources.nix;
+
+in
+
 {
 
   services.munin-node = {
@@ -47,7 +53,8 @@
     extraPlugins = let
       mkPlugin = pluginName: lib.getExe (pkgs.writeShellApplication {
         name = pluginName;
-        runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils ];
+        runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils bc ];
+        runtimeEnv.NIXPKGS_UNSTABLE_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
         text = builtins.readFile ./${pluginName}.sh;
       });
       pluginNames = [
@@ -56,6 +63,7 @@
         "psi_some"
         "psi_full"
         "munin_graph_count"
+        "nixpkgs_age"
       ];
     in builtins.listToAttrs (builtins.map (name: { inherit name; value = mkPlugin name; }) pluginNames);
 
