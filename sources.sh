@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-
 ensure_nix() {
 	if ! command -v nix >/dev/null 2>&1; then
 		echo "nix must be on PATH. Follow instructions from https://nixos.org/download/"
@@ -15,7 +14,8 @@ ensure_git() {
 		echo "git not on PATH, bootstrapping it from nixpkgs rev 8f3e1f8. This may take some time, and WILL take nix store space."
 		git_tmp="$(mktemp -d)"
 		cd "$git_tmp"
-		nix --extra-experimental-features 'nix-command fetch-tree' build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "aarch64-linux"; }).git'
+		system="$(uname -m)-$(uname -s | tr '[:upper:]' '[:lower:]')"
+		nix --extra-experimental-features 'nix-command fetch-tree' build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "'"$system"'"; }).git'
 		git_store_path="$(realpath result)"
 		rm result
 		PATH="$git_store_path/bin:$PATH"
@@ -29,7 +29,8 @@ ensure_jq() {
 		echo "jq not on PATH, bootstrapping it from nixpkgs rev 8f3e1f8. This may take some time, and WILL take nix store space."
 		jq_tmp="$(mktemp -d)"
 		cd "$jq_tmp"
-		nix --extra-experimental-features 'nix-command fetch-tree' build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "aarch64-linux"; }).jq.bin'
+		system="$(uname -m)-$(uname -s | tr '[:upper:]' '[:lower:]')"
+		nix --extra-experimental-features 'nix-command fetch-tree' build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "'"$system"'"; }).jq.bin'
 		jq_store_path="$(realpath result-bin)"
 		rm result-bin
 		PATH="$jq_store_path/bin:$PATH"
