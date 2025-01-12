@@ -103,13 +103,5 @@ esac
 
 
 # Call $toplevel/bin/switch-to-configuration with the arguments we retained.
-# Determine whether to use sudo based on $action.
 
-case "$action" in
-	boot|switch|test)
-		sudo "$toplevel/bin/switch-to-configuration" "$action"
-		;;
-	*)
-		"$toplevel/bin/switch-to-configuration" "$action"
-		;;
-esac
+sudo "$toplevel/bin/switch-to-configuration" "$action" "${apply_args[@]}"
