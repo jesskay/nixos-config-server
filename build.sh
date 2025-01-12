@@ -67,16 +67,22 @@ done
 hostname="${hostname:-$(hostname)}"
 
 
+# Fetch this repo into the nix store
+store_path="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --impure --raw --expr '(builtins.fetchTree { type = "git"; url = "file://'"$(dirname "$(realpath "$0")")"'"; }).outPath')"
+
+
 # Build the toplevel.
 
 cd $(dirname $0)
 
-toplevel="$(nix build "${build_args[@]}" -f ./build.nix --argstr hostname "$hostname")"
+toplevel="$(nix build "${build_args[@]}" -f "$store_path/build.nix" --argstr hostname "$hostname")"
+
 
 # If we're printing the out path, do so.
 if [[ -n "$print_out_path" ]]; then
 	echo "$toplevel"
 fi
+
 
 # If we're not applying the build, we're done.
 if [[ -z "$apply_build" ]]; then
