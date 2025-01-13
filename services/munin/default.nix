@@ -49,7 +49,7 @@
         name = pluginName;
         runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils bc ];
         runtimeEnv.NIXPKGS_UNSTABLE_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
-        runtimeEnv.SELF_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
+        runtimeEnv.SELF_LAST_MODIFIED = toString sources.self.lastModified;
         text = builtins.readFile ./${pluginName}.sh;
       });
       pluginNames = [
