@@ -27,5 +27,4 @@ echo "nan"  # this is just here to preserve the line on the graph
 echo -n "nixpkgs_unstable_age.value "
 echo "scale=2; ($(date +%s) - $NIXPKGS_UNSTABLE_LAST_MODIFIED) / (60 * 60 * 24)" | bc
 echo -n "configuration_age.value "
-#echo "scale=2; ($(date +%s) - $SELF_LAST_MODIFIED) / (60 * 60 * 24)" | bc
-echo "nan"  # TODO: reimplement 'self' source in config and remove this
+echo "scale=2; ($(date +%s) - $SELF_LAST_MODIFIED) / (60 * 60 * 24)" | bc

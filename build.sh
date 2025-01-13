@@ -67,15 +67,30 @@ done
 hostname="${hostname:-$(hostname)}"
 
 
-# Fetch this repo into the nix store
-store_path="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --impure --raw --expr '(builtins.fetchTree { type = "git"; url = "file://'"$(dirname "$(realpath "$0")")"'"; }).outPath')"
+# Ensure jq present
+if ! command -v jq >/dev/null 2>&1; then
+	echo "jq not on PATH, bootstrapping it from nixpkgs rev 8f3e1f8. This may take some time, and WILL take nix store space."
+	jq_tmp="$(mktemp -d)"
+	cd "$jq_tmp"
+	system="$(uname -m)-$(uname -s | tr '[:upper:]' '[:lower:]')"
+	nix --extra-experimental-features 'nix-command fetch-tree' build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "'"$system"'"; }).jq.bin'
+	jq_store_path="$(realpath result-bin)"
+	rm result-bin
+	PATH="$jq_store_path/bin:$PATH"
+	cd - >/dev/null
+fi
+
+
+# Fetch this repo into the nix store (we move outPath to path here to prevent nix eval trying to be helpful with turning an attr with outPath into a path string, and then move it back in jq afterwards)
+metadata="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --impure --json --expr 'let s = builtins.fetchTree { type = "git"; url = "file://'"$(dirname "$(realpath "$0")")"'"; }; in builtins.removeAttrs (s // { path = s.outPath; }) ["outPath"]' | jq '.outPath = .path | del(.path)')"
+store_path="$(echo "$metadata" | jq -r .outPath)"
 
 
 # Build the toplevel.
 
 cd $(dirname $0)
 
-toplevel="$(nix build "${build_args[@]}" -f "$store_path/build.nix" --argstr hostname "$hostname")"
+toplevel="$(nix build "${build_args[@]}" -f "$store_path/build.nix" --argstr hostname "$hostname" --argstr inject-self-source "$metadata")"
 
 
 # If we're printing the out path, do so.

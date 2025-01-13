@@ -1,10 +1,4 @@
-{ config, pkgs, lib, ... }:
-
-let
-
-  sources = import ../../sources.nix;
-
-in
+{ config, pkgs, lib, sources, ... }:
 
 {
 
@@ -55,6 +49,7 @@ in
         name = pluginName;
         runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils bc ];
         runtimeEnv.NIXPKGS_UNSTABLE_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
+        runtimeEnv.SELF_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
         text = builtins.readFile ./${pluginName}.sh;
       });
       pluginNames = [

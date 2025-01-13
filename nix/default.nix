@@ -1,10 +1,4 @@
-{ pkgs, ... }:
-
-let
-
-  sources = import ../sources.nix;
-
-in
+{ pkgs, sources, ... }:
 
 {
 
