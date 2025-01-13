@@ -51,6 +51,10 @@ while [[ "$#" -gt 0 ]]; do
 			apply_build=
 			shift 1
 			;;
+		--show-trace)
+			build_args+=( "$1" )
+			shift 1
+			;;
 		--*)
 			echo "Unrecognized option: $1"
 			echo
