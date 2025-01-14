@@ -10,19 +10,22 @@ flakes.
 
 ### `hosts`
 
-Definitions for hosts are found in `hosts/default.nix`, with three fields:
+Definitions for hosts are found in `hosts/default.nix`, with a few fields:
 
-- `system`: The system (e.g., x86\_64-linux, aarch64-darwin, ...) the host
-  runs on.
+- `system`: _(required)_ The system (e.g., x86\_64-linux, aarch64-darwin, ...)
+  the host runs on.
 
-- `config`: The base module of the host's configuration. By convention, this
-  is typically `hosts/HOSTNAME/default.nix`, but it doesn't have to be.
+- `config`: _(required)_ The base module of the host's configuration. By
+  convention, this is typically `hosts/HOSTNAME/default.nix`, but it doesn't
+  have to be.
 
-- `nixpkgs`: A nixpkgs instance that the host's config will be built against.
-  This uses `sources` (see below) to get the path to a nixpkgs source tree, and
-  reuses `system` from above to set the system that should be built for.
-  This is also where changes to the nixpkgs instantiation (such as overlays)
-  should be made.
+- `nixpkgs`: _(required)_ A nixpkgs source that the host's config will be built
+  against. This uses `sources` (see below) to get the path to a nixpkgs source
+  tree, and then the build will combine this with the host's `system` and
+  `overlays` to instantiate the nixpkgs used to go on and build the system.
+
+- `overlays`: _(optional)_ A list of overlays to apply to nixpkgs when building
+  this host.
 
 
 ### `modules`
@@ -32,6 +35,12 @@ Modules that extend NixOS's configuration options:
 - `simple-nginx` provides options under `services.nginx.simpleVhosts` to
   allow terse definition of a number of types of vhosts with SSL-by-default
   (using ACME certificate provisioning).
+
+
+### `overlays`
+
+Overlays to be applied to nixpkgs. One overlay per nix file, defined directly
+at the top level of that file.
 
 
 ### `nix`

@@ -12,9 +12,16 @@ let
 
   extraSource = if inject-self-source == null then {} else { self = builtins.fromJSON inject-self-source; };
 
-  nixos = host.nixpkgs.nixos [
+  sources = import ./sources.nix // extraSource;
+
+  pkgs = import host.nixpkgs {
+    inherit (host) system;
+    overlays = map import (host.overlays or []);
+  };
+
+  nixos = pkgs.nixos [
     host.config
-    { config._module.args.sources = (import ./sources.nix) // extraSource; }
+    { config._module.args.sources = sources; }
   ];
 
 in nixos.config.system.build.toplevel
