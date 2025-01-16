@@ -12,7 +12,7 @@
 
     options = {
 
-      calibreLibrary = "/var/lib/${config.services.calibre-web.dataDir}/library";
+      calibreLibrary = "${config.services.calibre-web.dataDir}/library";
 
       enableBookUploading = true;
       enableBookConversion = true;
