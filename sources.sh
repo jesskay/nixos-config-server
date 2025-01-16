@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Base nix command and required extra features defined here to avoid repetition.
+NIXCMD=( "nix" "--extra-experimental-features" "nix-command fetch-tree" )
+
 ensure_nix() {
 	if ! command -v nix >/dev/null 2>&1; then
 		echo "nix must be on PATH. Follow instructions from https://nixos.org/download/"
@@ -15,7 +18,7 @@ ensure_git() {
 		git_tmp="$(mktemp -d)"
 		cd "$git_tmp"
 		system="$(uname -m)-$(uname -s | tr '[:upper:]' '[:lower:]')"
-		nix --extra-experimental-features 'nix-command fetch-tree' build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "'"$system"'"; }).git'
+		"${NIXCMD[@]}" build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "'"$system"'"; }).git'
 		git_store_path="$(realpath result)"
 		rm result
 		PATH="$git_store_path/bin:$PATH"
@@ -30,7 +33,7 @@ ensure_jq() {
 		jq_tmp="$(mktemp -d)"
 		cd "$jq_tmp"
 		system="$(uname -m)-$(uname -s | tr '[:upper:]' '[:lower:]')"
-		nix --extra-experimental-features 'nix-command fetch-tree' build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "'"$system"'"; }).jq.bin'
+		"${NIXCMD[@]}" build --expr '(import (builtins.fetchTree { type = "git"; url = "git@github.com:NixOS/nixpkgs.git"; rev = "8f3e1f807051e32d8c95cd12b9b421623850a34d"; narHash = "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI="; }) { system = "'"$system"'"; }).jq.bin'
 		jq_store_path="$(realpath result-bin)"
 		rm result-bin
 		PATH="$jq_store_path/bin:$PATH"
@@ -91,7 +94,7 @@ case $COMMAND in
 
 		echo "Getting latest revision..."
 		rev="$(git ls-remote "$2" "$3" | cut -f1)"
-		metadata="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$2"'"; ref = "refs/heads/'"$3"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
+		metadata="$("${NIXCMD[@]}" eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$2"'"; ref = "refs/heads/'"$3"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
 		narHash="$(echo "$metadata" | jq -r '.narHash')"
 		lastModified="$(echo "$metadata" | jq '.lastModified')"
 
@@ -170,7 +173,7 @@ case $COMMAND in
 				echo -e "Already up to date."
 			else
 				echo -e "Updating to revision \033[1m$rev\033[0m..."
-				metadata="$(nix --extra-experimental-features 'nix-command fetch-tree' eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$url"'"; ref = "refs/heads/'"$branch"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
+				metadata="$("${NIXCMD[@]}" eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$url"'"; ref = "refs/heads/'"$branch"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
 				narHash="$(echo "$metadata" | jq -r '.narHash')"
 				lastModified="$(echo "$metadata" | jq '.lastModified')"
 
