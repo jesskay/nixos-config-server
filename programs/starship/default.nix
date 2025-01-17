@@ -14,7 +14,7 @@
       shlvl = {
         disabled = false;
         symbol = " 🐚";
-        threshold = 1;
+        threshold = 2;
       };
       cmd_duration.disabled = true;
       directory = {
