@@ -3,7 +3,7 @@
 {
 
   # build kernel module for USB wifi adapter
-  boot.extraModulePackages = with config.boot.kernelPackages; [ rtl8821au ];
+  boot.extraModulePackages = with config.boot.kernelPackages; if (kernelOlder "6.13") then [ rtw88 ] else [];
 
   # configure wifi using PSKs from agenix
   networking.wireless.enable = true;
