@@ -5,6 +5,12 @@
   # build kernel module for USB wifi adapter
   boot.extraModulePackages = with config.boot.kernelPackages; if (kernelOlder "6.13") then [ rtw88 ] else [];
 
+  # EXPERIMENTAL: disable deep power-saving for rtw drivers, as it may be connected to occasional instability
+  boot.extraModprobeConfig = ''
+    options rtw_core disable_lps_deep=y
+    options rtw88_core disable_lps_deep=y
+  '';
+
   # configure wifi using PSKs from agenix
   networking.wireless.enable = true;
   networking.wireless.interfaces = [ "wlp1s0u1u3" ];
