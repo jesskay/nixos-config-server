@@ -87,9 +87,6 @@ in
   # enable bluetooth
   hardware.bluetooth.enable = true;
 
-  # enable Argon One case features (e.g., fan control)
-  services.hardware.argonone.enable = true;
-
   # configure root on USB-attached SSD, /boot on microSD
   fileSystems = {
     "/" = {
