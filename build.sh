@@ -9,6 +9,7 @@ NIXCMD=( "nix" "--extra-experimental-features" "nix-command fetch-tree" )
 declare -a apply_args
 build_args=( "--no-link" "--print-out-paths" "--pure-eval" )
 print_out_path=
+print_diff=
 apply_build=yes
 
 while [[ "$#" -gt 0 ]]; do
@@ -31,6 +32,9 @@ while [[ "$#" -gt 0 ]]; do
 				""
 				"	--print-out-path"
 				"		Dump out the path to the new toplevel instead of proceeding to apply it."
+				""
+				"	--diff"
+				"		Diff the new toplevel from the currently booted system instead of applying."
 			)
 			printf '%s\n' "${message[@]}"
 			exit 0
@@ -51,6 +55,11 @@ while [[ "$#" -gt 0 ]]; do
 			;;
 		--print-out-path)
 			print_out_path=yes
+			apply_build=
+			shift 1
+			;;
+		--diff)
+			print_diff=yes
 			apply_build=
 			shift 1
 			;;
@@ -103,6 +112,12 @@ toplevel="$("${NIXCMD[@]}" build "${build_args[@]}" -f "$store_path/build.nix" -
 # If we're printing the out path, do so.
 if [[ -n "$print_out_path" ]]; then
 	echo "$toplevel"
+fi
+
+
+# If we're printing the diff, do so.
+if [[ -n "$print_diff" ]]; then
+	"${NIXCMD[@]}" store diff-closures /run/current-system "$toplevel"
 fi
 
 
