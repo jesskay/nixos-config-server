@@ -99,8 +99,17 @@ in
     };
   };
 
-  # configure swap file
-  swapDevices = [ { device = "/swap"; } ];
+  # configure zram swap with the default limit of 50% physical RAM
+  zramSwap.enable = true;
+
+  # configure some swap-related memory parameters to take advantage of the speed of zram
+  # - stolen from https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 180;
+    "vm.watermark_boost_factor" = 0;
+    "vm.watermark_scale_factor" = 125;
+    "vm.page-cluster" = 0;
+  };
 
   # add rpi tools and agenix to PATH
   environment.systemPackages = with pkgs; [
