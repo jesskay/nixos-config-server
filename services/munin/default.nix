@@ -47,7 +47,7 @@
     extraPlugins = let
       mkPlugin = pluginName: lib.getExe (pkgs.writeShellApplication {
         name = pluginName;
-        runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils bc ];
+        runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils bc iputils ];
         runtimeEnv.NIXPKGS_UNSTABLE_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
         runtimeEnv.SELF_LAST_MODIFIED = toString sources.self.lastModified;
         text = builtins.readFile ./${pluginName}.sh;
@@ -59,6 +59,7 @@
         "psi_full"
         "munin_graph_count"
         "nixpkgs_age"
+        "ping_rtt"
       ];
     in builtins.listToAttrs (builtins.map (name: { inherit name; value = mkPlugin name; }) pluginNames);
 
