@@ -47,7 +47,7 @@
     extraPlugins = let
       mkPlugin = pluginName: lib.getExe (pkgs.writeShellApplication {
         name = pluginName;
-        runtimeInputs = with pkgs; [ gnugrep gnused netcat findutils bc iputils ];
+        runtimeInputs = with pkgs; [ nix gnugrep gnused netcat findutils bc iputils ];
         runtimeEnv.NIXPKGS_UNSTABLE_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
         runtimeEnv.SELF_LAST_MODIFIED = toString sources.self.lastModified;
         text = builtins.readFile ./${pluginName}.sh;
