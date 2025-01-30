@@ -10,6 +10,8 @@
     listen.port = 8083;
     openFirewall = true;
 
+    dataDir = "/var/lib/calibre-web";
+
     options = {
 
       calibreLibrary = "${config.services.calibre-web.dataDir}/library";
