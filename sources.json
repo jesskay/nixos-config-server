@@ -44,8 +44,8 @@
   "blog": {
     "url": "file:///home/jess/psquid.net",
     "branch": "main",
-    "rev": "ffea4b3356ad25afb8f6860f8506ae544c0ea6ce",
-    "narHash": "sha256-RDRgZmIAUJWb0JdTME+UR9M38QmrVpVvK3kRg6gBx4s=",
-    "lastModified": 1738231547
+    "rev": "3d6457a5b0544f3f09a8f9ace060f79dd9916a48",
+    "narHash": "sha256-RxkZ79AJUZUqDOvP6/7UKyRQCNeWZuRFZV8tpI0ndWM=",
+    "lastModified": 1738234527
   }
 }
