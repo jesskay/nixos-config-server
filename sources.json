@@ -40,5 +40,12 @@
     "rev": "878fb05675a90ddb8ab308b472ad2139d5725de8",
     "narHash": "sha256-tKe2Ix+VE56p5zkjfsdU9AiRw3s4jDoJJufYXci6jdY=",
     "lastModified": 1731562293
+  },
+  "blog": {
+    "url": "file:///home/jess/psquid.net",
+    "branch": "main",
+    "rev": "ffea4b3356ad25afb8f6860f8506ae544c0ea6ce",
+    "narHash": "sha256-RDRgZmIAUJWb0JdTME+UR9M38QmrVpVvK3kRg6gBx4s=",
+    "lastModified": 1738231547
   }
 }
