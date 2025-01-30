@@ -93,7 +93,7 @@ case $COMMAND in
 		fi
 
 		echo "Getting latest revision..."
-		rev="$(git ls-remote "$2" "$3" | cut -f1)"
+		rev="$(git ls-remote "$2" "refs/heads/$3" | cut -f1)"
 		metadata="$("${NIXCMD[@]}" eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$2"'"; ref = "refs/heads/'"$3"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
 		narHash="$(echo "$metadata" | jq -r '.narHash')"
 		lastModified="$(echo "$metadata" | jq '.lastModified')"
@@ -167,7 +167,7 @@ case $COMMAND in
 			oldrev="$(jq -r ".[\"$src\"].rev" < "$SOURCES_JSON")"
 
 			echo -e "Getting latest revision for \033[1m$src\033[0m..."
-			rev="$(git ls-remote "$url" "$branch" | cut -f1)"
+			rev="$(git ls-remote "$url" "refs/heads/$branch" | cut -f1)"
 
 			if [[ "$oldrev" = "$rev" ]]; then
 				echo -e "Already up to date."
