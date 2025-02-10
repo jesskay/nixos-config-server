@@ -19,10 +19,8 @@ let
     overlays = map import (host.overlays or []);
   };
 
-  nixos = pkgs.nixos [
-    host.config
-    { config._module.args.sources = sources; }
-  ];
-
-in nixos.config.system.build.toplevel
+in pkgs.nixos [
+  host.config
+  { config._module.args.sources = sources; }
+]
 

@@ -11,6 +11,7 @@ build_args=( "--no-link" "--print-out-paths" "--pure-eval" )
 print_out_path=
 print_diff=
 apply_build=yes
+attr="config.system.build.toplevel"
 
 while [[ "$#" -gt 0 ]]; do
 	case ${1:-} in
@@ -33,6 +34,9 @@ while [[ "$#" -gt 0 ]]; do
 				"	--print-out-path"
 				"		Dump out the path to the new toplevel instead of proceeding to apply it."
 				""
+				"	--attr <ATTRPATH>"
+				"		Build <ATTRPATH> from the combined config modules. If this is not config.system.build.toplevel, implies --print-out-path."
+				""
 				"	--diff"
 				"		Diff the new toplevel from the currently booted system instead of applying."
 			)
@@ -52,6 +56,15 @@ while [[ "$#" -gt 0 ]]; do
 			build_args+=( "--dry-run" )
 			apply_build=
 			shift 1
+			;;
+		--attr)
+			if [[ "$#" -lt 2 ]]; then
+				echo "--attr requires a parameter"
+				exit 1
+			else
+				attr="$2"
+				shift 2
+			fi
 			;;
 		--print-out-path)
 			print_out_path=yes
@@ -82,6 +95,11 @@ done
 
 hostname="${hostname:-$(hostname)}"
 
+if [[ "$attr" != "config.system.build.toplevel" ]]; then
+	print_out_path=yes
+	apply_build=
+fi
+
 
 # Ensure jq present
 if ! command -v jq >/dev/null 2>&1; then
@@ -106,7 +124,7 @@ store_path="$(echo "$metadata" | jq -r .outPath)"
 
 cd $(dirname $0)
 
-toplevel="$("${NIXCMD[@]}" build "${build_args[@]}" -f "$store_path/build.nix" --argstr hostname "$hostname" --argstr inject-self-source "$metadata")"
+toplevel="$("${NIXCMD[@]}" build "${build_args[@]}" -f "$store_path/build.nix" "$attr" --argstr hostname "$hostname" --argstr inject-self-source "$metadata")"
 
 
 # If we're printing the out path, do so.
