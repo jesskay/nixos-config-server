@@ -2,9 +2,9 @@
   "nixpkgs-unstable": {
     "url": "https://github.com/NixOS/nixpkgs",
     "branch": "nixos-unstable",
-    "rev": "a79cfe0ebd24952b580b1cf08cd906354996d547",
-    "narHash": "sha256-mIvECo/NNdJJ/bXjNqIh8yeoSjVLAuDuTUzAo7dzs8Y=",
-    "lastModified": 1739020877
+    "rev": "64e75cd44acf21c7933d61d7721e812eac1b5a0a",
+    "narHash": "sha256-26L8VAu3/1YRxS8MHgBOyOM8xALdo6N0I04PgorE7UM=",
+    "lastModified": 1739214665
   },
   "agenix": {
     "url": "https://github.com/ryantm/agenix",
