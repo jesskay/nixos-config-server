@@ -45,23 +45,25 @@
     '';
 
     extraPlugins = let
-      mkPlugin = pluginName: lib.getExe (pkgs.writeShellApplication {
-        name = pluginName;
-        runtimeInputs = with pkgs; [ nix gnugrep gnused netcat findutils bc iputils ];
-        runtimeEnv.NIXPKGS_UNSTABLE_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
-        runtimeEnv.SELF_LAST_MODIFIED = toString sources.self.lastModified;
-        text = builtins.readFile ./${pluginName}.sh;
+      mkPlugin = { name, runtimeInputs ? [], runtimeEnv ? {} }: lib.getExe (pkgs.writeShellApplication {
+        inherit name runtimeInputs runtimeEnv;
+        text = builtins.readFile ./${name}.sh;
       });
-      pluginNames = [
-        "nix_store_count"
-        "nix_store_bytes"
-        "psi_some"
-        "psi_full"
-        "munin_graph_count"
-        "nixpkgs_age"
-        "ping_rtt"
+      pluginDefs = [
+        { name = "nix_store_count"; runtimeInputs = with pkgs; [ nix findutils ]; }
+        { name = "nix_store_bytes"; runtimeInputs = [ pkgs.nix ]; }
+        { name = "psi_some"; runtimeInputs = with pkgs; [ gnugrep gnused ]; }
+        { name = "psi_full"; runtimeInputs = with pkgs; [ gnugrep gnused ]; }
+        { name = "munin_graph_count"; runtimeInputs = with pkgs; [ gnugrep netcat ]; }
+        {
+          name = "nixpkgs_age";
+          runtimeInputs = [ pkgs.bc ];
+          runtimeEnv.NIXPKGS_UNSTABLE_LAST_MODIFIED = toString sources.nixpkgs-unstable.lastModified;
+          runtimeEnv.SELF_LAST_MODIFIED = toString sources.self.lastModified;
+        }
+        { name = "ping_rtt"; runtimeInputs = with pkgs; [ gnugrep findutils ]; }
       ];
-    in builtins.listToAttrs (builtins.map (name: { inherit name; value = mkPlugin name; }) pluginNames);
+    in builtins.listToAttrs (builtins.map (pluginDef: { inherit (pluginDef) name; value = mkPlugin pluginDef; }) pluginDefs);
 
   };
 
