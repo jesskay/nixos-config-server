@@ -57,6 +57,13 @@ if [[ "$#" -gt "0" ]]; then
 	shift 1
 fi
 
+# we have a special case for checking for updates without applying
+dry_update=
+if [[ "$COMMAND" = "check" ]]; then
+	dry_update=yes
+	COMMAND=update
+fi
+
 case $COMMAND in
 	list)
 		if [[ "$#" -ne "0" ]]; then
@@ -171,6 +178,8 @@ case $COMMAND in
 
 			if [[ "$oldrev" = "$rev" ]]; then
 				echo -e "Already up to date."
+			elif [[ -n "$dry_update" ]]; then
+				echo -e "Would update to revision \033[1m$rev\033[0m."
 			else
 				echo -e "Updating to revision \033[1m$rev\033[0m..."
 				metadata="$("${NIXCMD[@]}" eval --json --expr '{ inherit (builtins.fetchTree { type = "git"; url = "'"$url"'"; ref = "refs/heads/'"$branch"'"; rev = "'"$rev"'"; }) lastModified narHash; }')"
@@ -203,8 +212,10 @@ case $COMMAND in
 		echo "      Removes source NAME."
 		echo
 		echo "  update [<SOURCES...>]"
+		echo "  check [<SOURCES...>]"
 		echo "      Updates sources to the latest revision. If one or more SOURCEs is passed,"
-		echo "      update only those sources."
+		echo "      update only those sources. For check, don't apply the updates, just"
+		echo "      display them."
 		;;
 esac
 
