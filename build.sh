@@ -12,6 +12,7 @@ print_out_path=
 print_diff=
 apply_build=yes
 attr="config.system.build.toplevel"
+do_eval=
 
 while [[ "$#" -gt 0 ]]; do
 	case ${1:-} in
@@ -36,6 +37,9 @@ while [[ "$#" -gt 0 ]]; do
 				""
 				"	--attr <ATTRPATH>"
 				"		Build <ATTRPATH> from the combined config modules. If this is not config.system.build.toplevel, implies --print-out-path."
+				""
+				"	--eval"
+				"		Evaluate and print rather than build."
 				""
 				"	--diff"
 				"		Diff the new toplevel from the currently booted system instead of applying."
@@ -65,6 +69,10 @@ while [[ "$#" -gt 0 ]]; do
 				attr="$2"
 				shift 2
 			fi
+			;;
+		--eval)
+			do_eval=yes
+			shift 1
 			;;
 		--print-out-path)
 			print_out_path=yes
@@ -124,7 +132,12 @@ store_path="$(echo "$metadata" | jq -r .outPath)"
 
 cd $(dirname $0)
 
-toplevel="$("${NIXCMD[@]}" build "${build_args[@]}" -f "$store_path/build.nix" "$attr" --argstr hostname "$hostname" --argstr inject-self-source "$metadata")"
+if [[ -n "$do_eval" ]]; then
+	"${NIXCMD[@]}" eval --pure-eval -f "$store_path/build.nix" "$attr" --argstr hostname "$hostname" --argstr inject-self-source "$metadata"
+	exit
+else
+	toplevel="$("${NIXCMD[@]}" build "${build_args[@]}" -f "$store_path/build.nix" "$attr" --argstr hostname "$hostname" --argstr inject-self-source "$metadata")"
+fi
 
 
 # If we're printing the out path, do so.
