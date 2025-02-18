@@ -17,8 +17,6 @@
       calibreLibrary = "${config.services.calibre-web.dataDir}/library";
 
       enableBookUploading = true;
-      enableBookConversion = true;
-      enableKepubify = true;
 
     };
 
