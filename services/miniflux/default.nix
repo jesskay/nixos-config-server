@@ -14,7 +14,7 @@ in
 
     config = {
       # Set the app's base URL based on hostname
-      BASE_URL = "http://${hostname}/";
+      BASE_URL = "https://${hostname}/";
 
       # Don't clean up old entries automatically
       CLEANUP_ARCHIVE_READ_DAYS = -1;
