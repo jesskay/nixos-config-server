@@ -10,4 +10,5 @@ in
   "wireless.age".publicKeys = users ++ systems;
   "freshrss.age".publicKeys = users ++ systems;
   "munin-email.age".publicKeys = users ++ systems;
+  "miniflux-admin.age".publicKeys = users ++ systems;
 }

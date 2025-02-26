@@ -11,7 +11,7 @@ in
   imports = [
     # services
     ../../services/calibre-web
-    ../../services/freshrss
+    ../../services/miniflux
     ../../services/home-assistant
     ../../services/munin
     ../../services/ntfy
