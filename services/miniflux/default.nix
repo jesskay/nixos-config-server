@@ -23,19 +23,17 @@ in
       # Fetch youtube watch time as estimated reading time
       FETCH_YOUTUBE_WATCH_TIME = 1;
 
-      # Queue up to 150 qualifying feeds every 20 minutes
+      # Queue up to 150 qualifying feeds every 5 minutes
       BATCH_SIZE = 150;
-      POLLING_FREQUENCY = 20;
+      POLLING_FREQUENCY = 5;
 
       # Retry an erroring feed up to 10 times before marking it broken
       POLLING_PARSING_ERROR_LIMIT = 10;
 
-      # Select qualifying feeds with a refresh interval based on last week's
-      # entry frequency, with a minimum refresh interval of 1 hour and a
-      # maximum of 48 hours.
-      POLLING_SCHEDULER = "entry_frequency";
-      SCHEDULER_ENTRY_FREQUENCY_MAX_INTERVAL = 48 * 60;
-      SCHEDULER_ENTRY_FREQUENCY_MIN_INTERVAL = 1 * 60;
+      # Select qualifying feeds via round-robin, with a minimum refresh
+      # interval of an hour for each feed.
+      POLLING_SCHEDULER = "round_robin";
+      SCHEDULER_ROUND_ROBIN_MIN_INTERVAL = 1 * 60;
 
       # Enable Webauthn/Passkey authentication
       WEBAUTHN = 1;
