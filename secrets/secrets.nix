@@ -7,7 +7,6 @@ let
   systems = [ sysRpi ];
 in
 {
-  "wireless.age".publicKeys = users ++ systems;
   "munin-email.age".publicKeys = users ++ systems;
   "miniflux-admin.age".publicKeys = users ++ systems;
 }
