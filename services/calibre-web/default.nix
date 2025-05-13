@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
 
@@ -19,6 +19,10 @@
       enableBookUploading = true;
 
     };
+
+    package = pkgs.calibre-web.overridePythonAttrs (super: {
+      dependencies = super.dependencies ++ super.optional-dependencies.kobo;
+    });
 
   };
 
